@@ -1,30 +1,41 @@
-const getIdDictionnary = (id) => {
-    const dictionnary = {};
-    const charArray = id.split('');
-    charArray.forEach(char => {
-        if (dictionnary[char] !== undefined) {
-            dictionnary[char]++
-        } else {
-            dictionnary[char] = 1;
-        }
-    });
-    return dictionnary;
-}
+const getIdDictionnary = id => {
+  const dictionnary = {};
+  const charArray = id.split("");
+  charArray.forEach(char => {
+    if (dictionnary[char] !== undefined) {
+      dictionnary[char]++;
+    } else {
+      dictionnary[char] = 1;
+    }
+  });
+  return dictionnary;
+};
 
-const compareDictionnary = (dictionnary1, dictionnary2) => {
-    const diff = {...dictionnary1};
-    const dictionnary2Keys = Object.keys(dictionnary2);
-    dictionnary2Keys.forEach(key => {
-        if(diff[key] !== undefined) {
-            diff[key] = diff[key] - dictionnary2[key];
-        } else {
-            diff[key] = -dictionnary2[key];
-        }
-    });
-    return diff;
-}
+const compareId = (a, b) => {
+  const arrA = a.split(""),
+    arrB = b.split(""),
+    arrDiffA = [],
+    arrDiffB = [],
+    sameArr = [];
+
+  if (arrA.length != arrB.length) return null;
+
+  for (let i = 0; i < arrA.length; i++) {
+    if (arrA[i] === arrB[i]) {
+      sameArr.push(arrA[i]);
+    } else {
+      arrDiffA.push(arrA[i]);
+      arrDiffB.push(arrB[i]);
+    }
+  }
+  return {
+    diffA: arrDiffA.join(""),
+    diffB: arrDiffB.join(""),
+    same: sameArr.join("")
+  };
+};
 
 module.exports = {
-    getIdDictionnary,
-    compareDictionnary
+  getIdDictionnary,
+  compareId
 };
