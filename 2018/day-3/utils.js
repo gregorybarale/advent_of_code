@@ -12,6 +12,17 @@ const parseRawClaim = strg => {
   };
 };
 
+const getSquareArrayFromClaim = (claim) => {
+  let squareArray = [];
+  for(let x = claim.left + 1; x <= claim.left + claim.width; x++) {
+    for(let y = claim.top + 1; y <= claim.top + claim.height; y++) {
+      squareArray = [...squareArray, `x${x}y${y}`];
+    }
+  }
+  return squareArray;
+}
+
 module.exports = {
-  parseRawClaim
+  parseRawClaim,
+  getSquareArrayFromClaim
 };
