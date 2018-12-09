@@ -47,7 +47,22 @@ const getSum = tree => {
   return array.reduce((acc, n) => acc + n, 0);
 };
 
+const getNodeValue = tree => {
+  if (tree.children === undefined) {
+    return getSum(tree);
+  }
+  return tree.metaData
+    .map(n => {
+      if (tree.children[n - 1]) {
+        return getNodeValue(tree.children[n - 1]);
+      }
+      return 0;
+    })
+    .reduce((acc, n) => acc + n, 0);
+};
+
 module.exports = {
   getTree,
-  getSum
+  getSum,
+  getNodeValue
 };
