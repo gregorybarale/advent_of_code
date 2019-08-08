@@ -34,7 +34,6 @@ In this repository, there are my solutions for the challenge in [Advent Of Code]
   * JavaScript: *Ongoing*
     * Day 1: *Ongoing*
     * Day 2: Done
-    * Day 3: *Ongoing*
 * 2018: *Ongoing*
   * JavaScript: *Ongoing*
     * Day 1: Done
