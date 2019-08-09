@@ -28,24 +28,26 @@ In this repository, there are my solutions for the challenge in [Advent Of Code]
 
 ## Solutions available
 
-* 2015: **TBD**
+* 2015: *Ongoing*
+  * JavaScript: *Ongoing*
+    * Day 1: ✅
 * 2016: **TBD**
 * 2017: *Ongoing*
   * JavaScript: *Ongoing*
     * Day 1: *Ongoing*
-    * Day 2: Done
+    * Day 2: ✅
 * 2018: *Ongoing*
   * JavaScript: *Ongoing*
-    * Day 1: Done
-    * Day 2: Done
-    * Day 3: Done
-    * Day 4: Done
-    * Day 5: Done
-    * Day 6: Done
+    * Day 1: ✅
+    * Day 2: ✅
+    * Day 3: ✅
+    * Day 4: ✅
+    * Day 5: ✅
+    * Day 6: ✅
     * Day 7: *Ongoing*
-    * Day 8: Done
-    * Day 9: Done
-    * Day 10: Done
+    * Day 8: ✅
+    * Day 9: ✅
+    * Day 10: ✅
     * Day 11: *Ongoing*
     * Day 12: *Ongoing*
     * Day 13: *Ongoing*
