@@ -31,6 +31,10 @@ In this repository, there are my solutions for the challenge in [Advent Of Code]
 * 2015: *Ongoing*
   * JavaScript: *Ongoing*
     * Day 1: ✅
+    * Day 2: ✅
+    * Day 3: ✅
+    * Day 4: ✅
+    * Day 5: ✅
 * 2016: **TBD**
 * 2017: *Ongoing*
   * JavaScript: *Ongoing*
