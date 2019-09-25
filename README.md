@@ -1,6 +1,6 @@
 # Advent Of Code by Grégory Barale
 
-> Last update 30/08/2019
+> Last update 25/09/2019
 
 ## Purpose
 
@@ -36,6 +36,7 @@ In this repository, there are my solutions for the challenge in [Advent Of Code]
     - Day 4: ✅
     - Day 5: ✅
     - Day 6: ✅ (_Todo_: améliorer les performances)
+    - Day 7: ✅ (_Todo_: refactorer)
 - 2016: **TBD**
 - 2017: _Ongoing_
   - JavaScript: _Ongoing_
