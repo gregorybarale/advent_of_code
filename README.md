@@ -1,7 +1,5 @@
 # Advent Of Code by Grégory Barale
 
-> Last update 25/09/2019
-
 ## Purpose
 
 In this repository, there are my solutions for the challenge in [Advent Of Code](https://adventofcode.com/).
