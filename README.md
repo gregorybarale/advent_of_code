@@ -57,3 +57,6 @@ In this repository, there are my solutions for the challenge in [Advent Of Code]
     - Day 11: _Ongoing_
     - Day 12: _Ongoing_
     - Day 13: _Ongoing_
+- 2019: _Ongoing_
+  - JavaScript: _Ongoing_
+    - Day 1: ✅
