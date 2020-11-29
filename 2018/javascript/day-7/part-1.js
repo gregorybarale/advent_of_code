@@ -1,7 +1,7 @@
 const input = require("./input");
 const utils = require("./utils");
 
-const stepConditionArray = input.map(instruction =>
+const stepConditionArray = input.map((instruction) =>
   utils.parseInstruction(instruction)
 );
 const stepDictionnary = utils.getAllStepList(stepConditionArray);
@@ -15,7 +15,7 @@ while (availableStep.length !== 0) {
     orderedStep,
     availableStep,
     nextStep,
-    stepConditionArray
+    stepConditionArray,
   );
 }
 

@@ -1001,5 +1001,5 @@ module.exports = [
   "[1518-06-04 00:00] Guard #787 begins shift",
   "[1518-10-05 23:58] Guard #787 begins shift",
   "[1518-09-11 00:39] falls asleep",
-  "[1518-04-26 00:56] wakes up"
+  "[1518-04-26 00:56] wakes up",
 ];

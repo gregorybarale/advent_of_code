@@ -353,5 +353,5 @@ module.exports = [
   "position=<-53972,  54289> velocity=< 5, -5>",
   "position=<-43104,  32627> velocity=< 4, -3>",
   "position=< 54324,  10966> velocity=<-5, -1>",
-  "position=<-21442,  21794> velocity=< 2, -2>"
+  "position=<-21442,  21794> velocity=< 2, -2>",
 ];

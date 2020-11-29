@@ -12,16 +12,16 @@ for (let x = minX; x <= maxX; x++) {
   for (let y = minY; y <= maxY; y++) {
     coordInAreaRaw.push({
       x,
-      y
+      y,
     });
   }
 }
 
-const coordInArea = coordInAreaRaw.map(coord => {
+const coordInArea = coordInAreaRaw.map((coord) => {
   const distanceArr = pointArr
-    .map(point => ({
+    .map((point) => ({
       id: point.id,
-      distance: utils.computeDistance(coord, point)
+      distance: utils.computeDistance(coord, point),
     }))
     .sort((a, b) => {
       if (a.distance > b.distance) return 1;
@@ -34,29 +34,30 @@ const coordInArea = coordInAreaRaw.map(coord => {
     return {
       idOwner: undefined,
       x: coord.x,
-      y: coord.y
+      y: coord.y,
     };
   } else {
     return {
       idOwner: firstDist.id,
       x: coord.x,
-      y: coord.y
+      y: coord.y,
     };
   }
 });
 
 const coordInEdge = coordInArea.filter(
-  coord =>
-    coord.x === minX || coord.x === maxX || coord.y === minY || coord.y === maxY
+  (coord) =>
+    coord.x === minX || coord.x === maxX || coord.y === minY ||
+    coord.y === maxY,
 );
 
-const pointWithNotInfiniteArea = pointArr.filter(point =>
-  coordInEdge.every(coord => coord.idOwner !== point.id)
+const pointWithNotInfiniteArea = pointArr.filter((point) =>
+  coordInEdge.every((coord) => coord.idOwner !== point.id)
 );
 
-const pointArea = pointWithNotInfiniteArea.map(point => ({
+const pointArea = pointWithNotInfiniteArea.map((point) => ({
   id: point.id,
-  area: coordInArea.filter(coord => coord.idOwner === point.id).length
+  area: coordInArea.filter((coord) => coord.idOwner === point.id).length,
 }));
 
 const largestArea = pointArea

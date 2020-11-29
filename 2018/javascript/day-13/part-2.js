@@ -5,7 +5,7 @@ const utils = require("./utils");
 //const rawData = example;
 const rawData = input;
 
-console.log(example.map(x => x.split("")));
+console.log(example.map((x) => x.split("")));
 
 if (!utils.checkInputIntegrity(rawData)) {
   throw new Error("Initial input is invalid");
@@ -14,7 +14,7 @@ if (!utils.checkInputIntegrity(rawData)) {
 const positions = utils.retrieveInitialPosition(rawData);
 
 while (positions.carts.length > 1) {
-  positions.carts.forEach(cart => {
+  positions.carts.forEach((cart) => {
     // Move cart
     switch (cart.direction) {
       case "top":
@@ -36,7 +36,7 @@ while (positions.carts.length > 1) {
     if (utils.isOnIntersection(positions, cart)) {
       cart.direction = utils.getNewDirection(
         cart.nextDirection,
-        cart.direction
+        cart.direction,
       );
       switch (cart.nextDirection) {
         case "left":
@@ -58,7 +58,7 @@ while (positions.carts.length > 1) {
         cart.direction = "bottom";
       } else {
         throw new Error(
-          `Wrong direction for a topleft corner. Direction:${cart.direction}`
+          `Wrong direction for a topleft corner. Direction:${cart.direction}`,
         );
       }
     } else if (utils.isOnTopRightCorner(positions, cart)) {
@@ -68,7 +68,7 @@ while (positions.carts.length > 1) {
         cart.direction = "bottom";
       } else {
         throw new Error(
-          `Wrong direction for a topright corner. Direction:${cart.direction}`
+          `Wrong direction for a topright corner. Direction:${cart.direction}`,
         );
       }
     } else if (utils.isOnBottomLeftCorner(positions, cart)) {
@@ -78,7 +78,7 @@ while (positions.carts.length > 1) {
         cart.direction = "top";
       } else {
         throw new Error(
-          `Wrong direction for a bottomleft corner. Direction:${cart.direction}`
+          `Wrong direction for a bottomleft corner. Direction:${cart.direction}`,
         );
       }
     } else if (utils.isOnBottomRightCorner(positions, cart)) {
@@ -88,9 +88,7 @@ while (positions.carts.length > 1) {
         cart.direction = "top";
       } else {
         throw new Error(
-          `Wrong direction for a bottomright corner. Direction:${
-            cart.direction
-          }`
+          `Wrong direction for a bottomright corner. Direction:${cart.direction}`,
         );
       }
     }
@@ -98,8 +96,10 @@ while (positions.carts.length > 1) {
   positions.carts = positions.carts.reduce((acc, cart, _, array) => {
     if (
       array
-        .filter(otherCart => JSON.stringify(otherCart) !== JSON.stringify(cart))
-        .every(otherCart => !utils.hasSameCoordinate(cart, otherCart))
+        .filter((otherCart) =>
+          JSON.stringify(otherCart) !== JSON.stringify(cart)
+        )
+        .every((otherCart) => !utils.hasSameCoordinate(cart, otherCart))
     ) {
       return [...acc, cart];
     }

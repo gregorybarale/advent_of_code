@@ -337,5 +337,5 @@ module.exports = [
   "ab AND ad -> ae",
   "NOT ac -> ad",
   "1 AND ht -> hu",
-  "NOT hn -> ho"
+  "NOT hn -> ho",
 ];

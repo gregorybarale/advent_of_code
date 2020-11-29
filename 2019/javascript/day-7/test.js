@@ -5,9 +5,9 @@ const testCases1 = [
   {
     input: {
       program: [3, 15, 3, 16, 1002, 16, 10, 16, 1, 16, 15, 15, 4, 15, 99, 0, 0],
-      settings: [4, 3, 2, 1, 0]
+      settings: [4, 3, 2, 1, 0],
     },
-    result: 43210
+    result: 43210,
   },
   {
     input: {
@@ -36,11 +36,11 @@ const testCases1 = [
         23,
         99,
         0,
-        0
+        0,
       ],
-      settings: [0, 1, 2, 3, 4]
+      settings: [0, 1, 2, 3, 4],
     },
-    result: 54321
+    result: 54321,
   },
   {
     input: {
@@ -78,12 +78,12 @@ const testCases1 = [
         99,
         0,
         0,
-        0
+        0,
       ],
-      settings: [1, 0, 4, 3, 2]
+      settings: [1, 0, 4, 3, 2],
     },
-    result: 65210
-  }
+    result: 65210,
+  },
 ];
 
 const testCases2 = [
@@ -118,11 +118,11 @@ const testCases2 = [
         99,
         0,
         0,
-        5
+        5,
       ],
-      settings: [9, 8, 7, 6, 5]
+      settings: [9, 8, 7, 6, 5],
     },
-    result: 139629729
+    result: 139629729,
   },
   {
     input: {
@@ -183,40 +183,48 @@ const testCases2 = [
         0,
         0,
         0,
-        10
+        10,
       ],
-      settings: [9, 7, 8, 5, 6]
+      settings: [9, 7, 8, 5, 6],
     },
-    result: 18216
-  }
+    result: 18216,
+  },
 ];
 
-testCases1.forEach(testCase => {
+testCases1.forEach((testCase) => {
   assert.equal(
     fn.fn1(testCase.input.program, testCase.input.settings),
     testCase.result,
-    `Expect ${testCase.result} for ${JSON.stringify(
-      testCase.input,
-      null,
-      2
-    )} input in part 1 instead of ${fn.fn1(
-      testCase.input.program,
-      testCase.input.settings
-    )}`
+    `Expect ${testCase.result} for ${
+      JSON.stringify(
+        testCase.input,
+        null,
+        2,
+      )
+    } input in part 1 instead of ${
+      fn.fn1(
+        testCase.input.program,
+        testCase.input.settings,
+      )
+    }`,
   );
 });
 
-testCases2.forEach(testCase => {
+testCases2.forEach((testCase) => {
   assert.equal(
     fn.fn2(testCase.input.program, testCase.input.settings),
     testCase.result,
-    `Expect ${testCase.result} for ${JSON.stringify(
-      testCase.input,
-      null,
-      2
-    )} input in part 2 instead of ${fn.fn2(
-      testCase.input.program,
-      testCase.input.settings
-    )}`
+    `Expect ${testCase.result} for ${
+      JSON.stringify(
+        testCase.input,
+        null,
+        2,
+      )
+    } input in part 2 instead of ${
+      fn.fn2(
+        testCase.input.program,
+        testCase.input.settings,
+      )
+    }`,
   );
 });

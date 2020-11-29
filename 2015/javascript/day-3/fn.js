@@ -1,10 +1,10 @@
-const fn1 = input => {
+const fn1 = (input) => {
   const intructions = input.split("");
   const coords = { latitude: 0, longitude: 0 };
   const visitedHousesCoords = {
-    "0x0": 1
+    "0x0": 1,
   };
-  intructions.forEach(element => {
+  intructions.forEach((element) => {
     switch (element) {
       case ">":
         coords.longitude = coords.longitude + 1;
@@ -30,12 +30,12 @@ const fn1 = input => {
   return Object.keys(visitedHousesCoords).length;
 };
 
-const fn2 = input => {
+const fn2 = (input) => {
   const intructions = input.split("");
   const santaCoords = { latitude: 0, longitude: 0 };
   const robotCoords = { latitude: 0, longitude: 0 };
   const visitedHousesCoords = {
-    "0x0": 1
+    "0x0": 1,
   };
   intructions.forEach((element, index) => {
     let visitedHouseCoord;
@@ -84,5 +84,5 @@ const fn2 = input => {
 
 module.exports = {
   fn1,
-  fn2
+  fn2,
 };

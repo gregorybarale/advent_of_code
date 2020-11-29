@@ -7,21 +7,21 @@ const example = [
   "Step A must be finished before step D can begin.",
   "Step B must be finished before step E can begin.",
   "Step D must be finished before step E can begin.",
-  "Step F must be finished before step E can begin."
+  "Step F must be finished before step E can begin.",
 ];
 
-const stepConditionArray = input.map(instruction =>
+const stepConditionArray = input.map((instruction) =>
   utils.parseInstruction(instruction)
 );
 const stepDictionnary = utils
   .getAllStepList(stepConditionArray)
   .map((stepId, index) => ({
     id: stepId,
-    timeRemaining: 60 + index + 1
+    timeRemaining: 60 + index + 1,
   }));
 
-const firstSteps = stepDictionnary.filter(step =>
-  stepConditionArray.every(stepCondition => step.id !== stepCondition.next)
+const firstSteps = stepDictionnary.filter((step) =>
+  stepConditionArray.every((stepCondition) => step.id !== stepCondition.next)
 );
 
 let stackStepsOngoing = [];
@@ -33,40 +33,46 @@ let isFirstIter = true;
 
 while (stepsDone.length < stepDictionnary.length) {
   //
-  stackStepsOngoing.forEach(stepOngoing => stepOngoing.timeRemaining--);
+  stackStepsOngoing.forEach((stepOngoing) => stepOngoing.timeRemaining--);
   //
-  if (stackStepsOngoing.some(stepOngoing => stepOngoing.timeRemaining === 0)) {
+  if (
+    stackStepsOngoing.some((stepOngoing) => stepOngoing.timeRemaining === 0)
+  ) {
     const stepsNewlyDone = stackStepsOngoing.filter(
-      stepOngoing => stepOngoing.timeRemaining === 0
+      (stepOngoing) => stepOngoing.timeRemaining === 0,
     );
     stepsDone = [...stepsDone, ...stepsNewlyDone];
     nbOfAvailablesWorkers += stepsNewlyDone.length;
     stackStepsOngoing = stackStepsOngoing.filter(
-      stepOngoing => stepOngoing.timeRemaining > 0
+      (stepOngoing) => stepOngoing.timeRemaining > 0,
     );
   }
   //
   availableSteps = [
     ...firstSteps.filter(
-      step =>
-        stepsDone.every(stepDone => step.id !== stepDone.id) &&
-        stackStepsOngoing.every(stepOngoing => step.id !== stepOngoing.id)
+      (step) =>
+        stepsDone.every((stepDone) => step.id !== stepDone.id) &&
+        stackStepsOngoing.every((stepOngoing) => step.id !== stepOngoing.id),
     ),
     ...stepDictionnary.filter(
-      step =>
-        stepsDone.every(stepDone => step.id !== stepDone.id) &&
-        stackStepsOngoing.every(stepOngoing => step.id !== stepOngoing.id) &&
+      (step) =>
+        stepsDone.every((stepDone) => step.id !== stepDone.id) &&
+        stackStepsOngoing.every((stepOngoing) => step.id !== stepOngoing.id) &&
         stepConditionArray
-          .filter(stepCondition => stepCondition.next === step.id)
-          .every(stepCondition =>
-            stepsDone.map(stepDone => stepDone.id).includes(stepCondition.need)
-          )
-    )
+          .filter((stepCondition) => stepCondition.next === step.id)
+          .every((stepCondition) =>
+            stepsDone.map((stepDone) => stepDone.id).includes(
+              stepCondition.need,
+            )
+          ),
+    ),
   ]
     .reduce(
       (acc, step) =>
-        acc.map(accStep => accStep.id).includes(step.id) ? acc : [...acc, step],
-      []
+        acc.map((accStep) => accStep.id).includes(step.id)
+          ? acc
+          : [...acc, step],
+      [],
     )
     .sort((a, b) => {
       if (a.id > b.id) return 1;
@@ -81,7 +87,7 @@ while (stepsDone.length < stepDictionnary.length) {
   //
   console.log(`Workers used: ${stackStepsOngoing.length}`);
   console.log(
-    `Steps ongoing: ${stackStepsOngoing.map(step => step.id).join(",")}`
+    `Steps ongoing: ${stackStepsOngoing.map((step) => step.id).join(",")}`,
   );
   //
   if (!isFirstIter && stepsDone.length < stepDictionnary.length) time++;

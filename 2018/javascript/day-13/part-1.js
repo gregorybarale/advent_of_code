@@ -13,7 +13,7 @@ const positions = utils.retrieveInitialPosition(rawData);
 let hasCollision = false;
 
 while (!hasCollision) {
-  positions.carts.forEach(cart => {
+  positions.carts.forEach((cart) => {
     // Move cart
     switch (cart.direction) {
       case "top":
@@ -35,7 +35,7 @@ while (!hasCollision) {
     if (utils.isOnIntersection(positions, cart)) {
       cart.direction = utils.getNewDirection(
         cart.nextDirection,
-        cart.direction
+        cart.direction,
       );
       switch (cart.nextDirection) {
         case "left":
@@ -57,7 +57,7 @@ while (!hasCollision) {
         cart.direction = "bottom";
       } else {
         throw new Error(
-          `Wrong direction for a topleft corner. Direction:${cart.direction}`
+          `Wrong direction for a topleft corner. Direction:${cart.direction}`,
         );
       }
     } else if (utils.isOnTopRightCorner(positions, cart)) {
@@ -67,7 +67,7 @@ while (!hasCollision) {
         cart.direction = "bottom";
       } else {
         throw new Error(
-          `Wrong direction for a topright corner. Direction:${cart.direction}`
+          `Wrong direction for a topright corner. Direction:${cart.direction}`,
         );
       }
     } else if (utils.isOnBottomLeftCorner(positions, cart)) {
@@ -77,7 +77,7 @@ while (!hasCollision) {
         cart.direction = "top";
       } else {
         throw new Error(
-          `Wrong direction for a bottomleft corner. Direction:${cart.direction}`
+          `Wrong direction for a bottomleft corner. Direction:${cart.direction}`,
         );
       }
     } else if (utils.isOnBottomRightCorner(positions, cart)) {
@@ -87,9 +87,7 @@ while (!hasCollision) {
         cart.direction = "top";
       } else {
         throw new Error(
-          `Wrong direction for a bottomright corner. Direction:${
-            cart.direction
-          }`
+          `Wrong direction for a bottomright corner. Direction:${cart.direction}`,
         );
       }
     }
@@ -99,9 +97,9 @@ while (!hasCollision) {
     const currentCart = cartsBuffer.pop();
     if (
       cartsBuffer.some(
-        otherCart =>
+        (otherCart) =>
           otherCart.line === currentCart.line &&
-          otherCart.column === currentCart.column
+          otherCart.column === currentCart.column,
       )
     ) {
       hasCollision = true;

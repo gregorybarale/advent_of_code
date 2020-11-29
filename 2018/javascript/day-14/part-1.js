@@ -20,7 +20,7 @@ while (newRecipes < input) {
     const [firstNew, secondNew] = sum
       .toString()
       .split("")
-      .map(s => Number.parseInt(s, 10));
+      .map((s) => Number.parseInt(s, 10));
     circularLink1.insertAfterLast(firstNew);
     circularLink1.insertAfterLast(secondNew);
     circularLink2.insertAfterLast(firstNew);
@@ -41,7 +41,7 @@ while (newRecipes < input) {
     circularLink2.goNext();
   }
   console.log(`Turn: ${newRecipes}`);
-  console.lo
+  console.lo;
   console.log(circularLink1.getListLog());
   console.log(circularLink2.getListLog());
   newRecipes++;

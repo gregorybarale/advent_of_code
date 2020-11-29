@@ -1,17 +1,17 @@
-const checkInputIntegrity = input => {
+const checkInputIntegrity = (input) => {
   const lineLength = input[0].split("").length;
-  return input.map(l => l.split("")).every(l => l.length === lineLength);
+  return input.map((l) => l.split("")).every((l) => l.length === lineLength);
 };
 
-const retrieveInitialPosition = input => {
-  const parsedInput = input.map(s => s.split(""));
+const retrieveInitialPosition = (input) => {
+  const parsedInput = input.map((s) => s.split(""));
   const positions = {
     topLeftCorners: [],
     topRightCorners: [],
     bottomLeftCorners: [],
     bottomRightCorners: [],
     intersections: [],
-    carts: []
+    carts: [],
   };
 
   parsedInput.forEach((l, line) => {
@@ -22,7 +22,10 @@ const retrieveInitialPosition = input => {
             positions.topLeftCorners.push({ line, column });
           } else if (column === arr.length - 1) {
             positions.bottomRightCorners.push({ line, column });
-          } else if (arr[column + 1] === "-" || arr[column + 1] === "+" || arr[column + 1] === ">" || arr[column + 1] === "<") {
+          } else if (
+            arr[column + 1] === "-" || arr[column + 1] === "+" ||
+            arr[column + 1] === ">" || arr[column + 1] === "<"
+          ) {
             positions.topLeftCorners.push({ line, column });
           } else {
             positions.bottomRightCorners.push({ line, column });
@@ -33,7 +36,10 @@ const retrieveInitialPosition = input => {
             positions.bottomLeftCorners.push({ line, column });
           } else if (column === arr.length - 1) {
             positions.topRightCorners.push({ line, column });
-          } else if (arr[column + 1] === "-" || arr[column + 1] === "+" || arr[column + 1] === ">" || arr[column + 1] === "<") {
+          } else if (
+            arr[column + 1] === "-" || arr[column + 1] === "+" ||
+            arr[column + 1] === ">" || arr[column + 1] === "<"
+          ) {
             positions.bottomLeftCorners.push({ line, column });
           } else {
             positions.topRightCorners.push({ line, column });
@@ -47,7 +53,7 @@ const retrieveInitialPosition = input => {
             line,
             column,
             direction: "right",
-            nextDirection: "left"
+            nextDirection: "left",
           });
           break;
         case "<":
@@ -55,7 +61,7 @@ const retrieveInitialPosition = input => {
             line,
             column,
             direction: "left",
-            nextDirection: "left"
+            nextDirection: "left",
           });
           break;
         case "^":
@@ -63,7 +69,7 @@ const retrieveInitialPosition = input => {
             line,
             column,
             direction: "top",
-            nextDirection: "left"
+            nextDirection: "left",
           });
           break;
         case "v":
@@ -71,11 +77,11 @@ const retrieveInitialPosition = input => {
             line,
             column,
             direction: "bottom",
-            nextDirection: "left"
+            nextDirection: "left",
           });
           break;
         default:
-        // Do nothing
+          // Do nothing
       }
     });
   });
@@ -86,7 +92,7 @@ const retrieveInitialPosition = input => {
 const isOnIntersection = (positions, cart) => {
   return (
     positions.intersections.find(
-      i => i.line === cart.line && i.column === cart.column
+      (i) => i.line === cart.line && i.column === cart.column,
     ) !== undefined
   );
 };
@@ -94,7 +100,7 @@ const isOnIntersection = (positions, cart) => {
 const isOnTopLeftCorner = (positions, cart) => {
   return (
     positions.topLeftCorners.find(
-      i => i.line === cart.line && i.column === cart.column
+      (i) => i.line === cart.line && i.column === cart.column,
     ) !== undefined
   );
 };
@@ -102,7 +108,7 @@ const isOnTopLeftCorner = (positions, cart) => {
 const isOnTopRightCorner = (positions, cart) => {
   return (
     positions.topRightCorners.find(
-      i => i.line === cart.line && i.column === cart.column
+      (i) => i.line === cart.line && i.column === cart.column,
     ) !== undefined
   );
 };
@@ -110,7 +116,7 @@ const isOnTopRightCorner = (positions, cart) => {
 const isOnBottomLeftCorner = (positions, cart) => {
   return (
     positions.bottomLeftCorners.find(
-      i => i.line === cart.line && i.column === cart.column
+      (i) => i.line === cart.line && i.column === cart.column,
     ) !== undefined
   );
 };
@@ -118,7 +124,7 @@ const isOnBottomLeftCorner = (positions, cart) => {
 const isOnBottomRightCorner = (positions, cart) => {
   return (
     positions.bottomRightCorners.find(
-      i => i.line === cart.line && i.column === cart.column
+      (i) => i.line === cart.line && i.column === cart.column,
     ) !== undefined
   );
 };
@@ -156,7 +162,7 @@ const getNewDirection = (nextDirection, currentDirection) => {
 
 const hasSameCoordinate = (cart1, cart2) => {
   return cart1.line === cart2.line && cart1.column === cart2.column;
-}
+};
 
 module.exports = {
   checkInputIntegrity,
@@ -167,5 +173,5 @@ module.exports = {
   isOnBottomLeftCorner,
   isOnBottomRightCorner,
   getNewDirection,
-  hasSameCoordinate
+  hasSameCoordinate,
 };

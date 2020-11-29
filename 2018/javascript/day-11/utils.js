@@ -8,7 +8,7 @@ const computeCellPower = (x, y, serialNumber) => {
       finalPowerLevelStrg.length >= 3
         ? finalPowerLevelStrg[finalPowerLevelStrg.length - 3]
         : "0",
-      10
+      10,
     ) - 5
   );
 };
@@ -18,7 +18,7 @@ const computeBlockCellPower = (
   topLeftY,
   serialNumber,
   width,
-  length
+  length,
 ) => {
   let totalPower = 0;
   for (let x = topLeftX; x < topLeftX + width; x++) {
@@ -31,5 +31,5 @@ const computeBlockCellPower = (
 
 module.exports = {
   computeCellPower,
-  computeBlockCellPower
+  computeBlockCellPower,
 };

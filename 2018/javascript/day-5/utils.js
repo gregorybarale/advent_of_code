@@ -5,10 +5,10 @@ const _doesReact = (char1, char2) => {
   );
 };
 
-const reactChain = inputArr => {
+const reactChain = (inputArr) => {
   const stack = [];
 
-  inputArr.forEach(char => {
+  inputArr.forEach((char) => {
     if (stack.length === 0) {
       stack.push(char);
     } else {
@@ -22,5 +22,5 @@ const reactChain = inputArr => {
 };
 
 module.exports = {
-  reactChain
+  reactChain,
 };

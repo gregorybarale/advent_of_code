@@ -1,4 +1,4 @@
 module.exports = {
   nbOfPlayers: 463,
-  lastMarbleWorth: 71787
+  lastMarbleWorth: 71787,
 };

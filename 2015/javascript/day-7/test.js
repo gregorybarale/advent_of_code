@@ -11,7 +11,7 @@ const testCases1 = [
       "x LSHIFT 2 -> f",
       "y RSHIFT 2 -> g",
       "NOT x -> h",
-      "NOT y -> i"
+      "NOT y -> i",
     ],
     result: {
       d: 72,
@@ -21,18 +21,20 @@ const testCases1 = [
       h: 65412,
       i: 65079,
       x: 123,
-      y: 456
-    }
-  }
+      y: 456,
+    },
+  },
 ];
 
-testCases1.forEach(testCase => {
+testCases1.forEach((testCase) => {
   const result = fn.fn1(testCase.input);
-  Object.keys(result).forEach(key => {
+  Object.keys(result).forEach((key) => {
     assert.equal(
       result[key],
       testCase.result[key],
-      `Expect ${testCase.result[key]} for ${key} input in part 1 instead of ${result[key]}`
+      `Expect ${testCase.result[key]} for ${key} input in part 1 instead of ${
+        result[key]
+      }`,
     );
   });
 });

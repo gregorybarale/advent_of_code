@@ -1,7 +1,7 @@
-const getIdDictionnary = id => {
+const getIdDictionnary = (id) => {
   const dictionnary = {};
   const charArray = id.split("");
-  charArray.forEach(char => {
+  charArray.forEach((char) => {
     if (dictionnary[char] !== undefined) {
       dictionnary[char]++;
     } else {
@@ -31,11 +31,11 @@ const compareId = (a, b) => {
   return {
     diffA: arrDiffA.join(""),
     diffB: arrDiffB.join(""),
-    same: sameArr.join("")
+    same: sameArr.join(""),
   };
 };
 
 module.exports = {
   getIdDictionnary,
-  compareId
+  compareId,
 };

@@ -3,7 +3,7 @@ const utils = require("./utils");
 
 let state = input.initialState;
 let generation = 0;
-const rules = input.rawRules.map(rawRule => utils.parseRawRule(rawRule));
+const rules = input.rawRules.map((rawRule) => utils.parseRawRule(rawRule));
 const noPlantArr = [".", ".", ".", "."];
 let initialIndex = 0;
 let offset;
@@ -15,7 +15,7 @@ while (generation < 50000000000) {
   let newStateArr = [];
   for (let i = 2; i < stateArr.length - 2; i++) {
     const pattern = stateArr.slice(i - 2, i + 3);
-    const rule = rules.find(rule => rule.pattern === pattern.join(""));
+    const rule = rules.find((rule) => rule.pattern === pattern.join(""));
     if (rule) {
       newStateArr.push(rule.replacement);
     } else {

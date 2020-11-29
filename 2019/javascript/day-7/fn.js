@@ -3,7 +3,7 @@ class Amplifier {
   inputs = undefined;
   output = undefined;
 
-  instructionParser = instructionAsNumber => {
+  instructionParser = (instructionAsNumber) => {
     const instructionAsString = `${instructionAsNumber}`;
     let opCode, firstParameterMode, secondParameterMode, thirdParameterMode;
 
@@ -18,41 +18,59 @@ class Amplifier {
         break;
       case 3:
         opCode = instructionAsString.substring(instructionAsString.length - 2);
-        if (instructionAsString[0] !== "0" && instructionAsString[0] !== "1")
+        if (instructionAsString[0] !== "0" && instructionAsString[0] !== "1") {
           throw new Error(
-            `Invalid Parameter Mode A: ${instructionAsString[instructionAsString]}`
+            `Invalid Parameter Mode A: ${
+              instructionAsString[instructionAsString]
+            }`,
           );
+        }
         firstParameterMode = Number.parseInt(instructionAsString[0], 10);
         secondParameterMode = thirdParameterMode = 0;
         break;
       case 4:
         opCode = instructionAsString.substring(instructionAsString.length - 2);
-        if (instructionAsString[1] !== "0" && instructionAsString[1] !== "1")
+        if (instructionAsString[1] !== "0" && instructionAsString[1] !== "1") {
           throw new Error(
-            `Invalid Parameter Mode A: ${instructionAsString[instructionAsString]}`
+            `Invalid Parameter Mode A: ${
+              instructionAsString[instructionAsString]
+            }`,
           );
-        if (instructionAsString[0] !== "0" && instructionAsString[0] !== "1")
+        }
+        if (instructionAsString[0] !== "0" && instructionAsString[0] !== "1") {
           throw new Error(
-            `Invalid Parameter Mode B: ${instructionAsString[instructionAsString]}`
+            `Invalid Parameter Mode B: ${
+              instructionAsString[instructionAsString]
+            }`,
           );
+        }
         firstParameterMode = Number.parseInt(instructionAsString[1], 10);
         secondParameterMode = Number.parseInt(instructionAsString[0], 10);
         thirdParameterMode = 0;
         break;
       case 5:
         opCode = instructionAsString.substring(instructionAsString.length - 2);
-        if (instructionAsString[2] !== "0" && instructionAsString[2] !== "1")
+        if (instructionAsString[2] !== "0" && instructionAsString[2] !== "1") {
           throw new Error(
-            `Invalid Parameter Mode A: ${instructionAsString[instructionAsString]}`
+            `Invalid Parameter Mode A: ${
+              instructionAsString[instructionAsString]
+            }`,
           );
-        if (instructionAsString[1] !== "0" && instructionAsString[1] !== "1")
+        }
+        if (instructionAsString[1] !== "0" && instructionAsString[1] !== "1") {
           throw new Error(
-            `Invalid Parameter Mode B: ${instructionAsString[instructionAsString]}`
+            `Invalid Parameter Mode B: ${
+              instructionAsString[instructionAsString]
+            }`,
           );
-        if (instructionAsString[0] !== "0" && instructionAsString[0] !== "1")
+        }
+        if (instructionAsString[0] !== "0" && instructionAsString[0] !== "1") {
           throw new Error(
-            `Invalid Parameter Mode C: ${instructionAsString[instructionAsString]}`
+            `Invalid Parameter Mode C: ${
+              instructionAsString[instructionAsString]
+            }`,
           );
+        }
         firstParameterMode = Number.parseInt(instructionAsString[2], 10);
         secondParameterMode = Number.parseInt(instructionAsString[1], 10);
         thirdParameterMode = Number.parseInt(instructionAsString[0], 10);
@@ -69,26 +87,25 @@ class Amplifier {
           transformationFunction: (
             firstParameterIndex,
             secondParameterIndex,
-            thirdParameterIndex
-          ) => array => {
-            if (thirdParameterMode) {
-              array[thirdParameterIndex] =
-                (firstParameterMode
+            thirdParameterIndex,
+          ) =>
+            (array) => {
+              if (thirdParameterMode) {
+                array[thirdParameterIndex] = (firstParameterMode
                   ? array[firstParameterIndex]
                   : array[array[firstParameterIndex]]) +
-                (secondParameterMode
-                  ? array[secondParameterIndex]
-                  : array[array[secondParameterIndex]]);
-            } else {
-              array[array[thirdParameterIndex]] =
-                (firstParameterMode
+                  (secondParameterMode
+                    ? array[secondParameterIndex]
+                    : array[array[secondParameterIndex]]);
+              } else {
+                array[array[thirdParameterIndex]] = (firstParameterMode
                   ? array[firstParameterIndex]
                   : array[array[firstParameterIndex]]) +
-                (secondParameterMode
-                  ? array[secondParameterIndex]
-                  : array[array[secondParameterIndex]]);
-            }
-          }
+                  (secondParameterMode
+                    ? array[secondParameterIndex]
+                    : array[array[secondParameterIndex]]);
+              }
+            },
         };
       case "02":
         return {
@@ -97,53 +114,55 @@ class Amplifier {
           transformationFunction: (
             firstParameterIndex,
             secondParameterIndex,
-            thirdParameterIndex
-          ) => array => {
-            if (thirdParameterMode) {
-              array[thirdParameterIndex] =
-                (firstParameterMode
+            thirdParameterIndex,
+          ) =>
+            (array) => {
+              if (thirdParameterMode) {
+                array[thirdParameterIndex] = (firstParameterMode
                   ? array[firstParameterIndex]
                   : array[array[firstParameterIndex]]) *
-                (secondParameterMode
-                  ? array[secondParameterIndex]
-                  : array[array[secondParameterIndex]]);
-            } else {
-              array[array[thirdParameterIndex]] =
-                (firstParameterMode
+                  (secondParameterMode
+                    ? array[secondParameterIndex]
+                    : array[array[secondParameterIndex]]);
+              } else {
+                array[array[thirdParameterIndex]] = (firstParameterMode
                   ? array[firstParameterIndex]
                   : array[array[firstParameterIndex]]) *
-                (secondParameterMode
-                  ? array[secondParameterIndex]
-                  : array[array[secondParameterIndex]]);
-            }
-          }
+                  (secondParameterMode
+                    ? array[secondParameterIndex]
+                    : array[array[secondParameterIndex]]);
+              }
+            },
         };
       case "03":
         return {
           opCode,
           numberOfParameter: 1,
-          transformationFunction: firstParameterIndex => array => {
-            if (firstParameterMode) {
-              array[firstParameterIndex] = this.inputs[this.currentInputIndex];
-            } else {
-              array[array[firstParameterIndex]] = this.inputs[
-                this.currentInputIndex
-              ];
-            }
-            this.currentInputIndex += 1;
-          }
+          transformationFunction: (firstParameterIndex) =>
+            (array) => {
+              if (firstParameterMode) {
+                array[firstParameterIndex] =
+                  this.inputs[this.currentInputIndex];
+              } else {
+                array[array[firstParameterIndex]] = this.inputs[
+                  this.currentInputIndex
+                ];
+              }
+              this.currentInputIndex += 1;
+            },
         };
       case "04":
         return {
           opCode,
           numberOfParameter: 1,
-          transformationFunction: firstParameterIndex => array => {
-            if (firstParameterMode) {
-              this.output = array[firstParameterIndex];
-            } else {
-              this.output = array[array[firstParameterIndex]];
-            }
-          }
+          transformationFunction: (firstParameterIndex) =>
+            (array) => {
+              if (firstParameterMode) {
+                this.output = array[firstParameterIndex];
+              } else {
+                this.output = array[array[firstParameterIndex]];
+              }
+            },
         };
       case "05":
         return {
@@ -151,20 +170,21 @@ class Amplifier {
           numberOfParameter: 2,
           getIndexToJump: (
             firstParameterIndex,
-            secondParameterIndex
-          ) => array => {
-            const firstValue = firstParameterMode
-              ? array[firstParameterIndex]
-              : array[array[firstParameterIndex]];
-            const secondValue = secondParameterMode
-              ? array[secondParameterIndex]
-              : array[array[secondParameterIndex]];
-            if (firstValue !== 0) {
-              return secondValue;
-            } else {
-              return undefined;
-            }
-          }
+            secondParameterIndex,
+          ) =>
+            (array) => {
+              const firstValue = firstParameterMode
+                ? array[firstParameterIndex]
+                : array[array[firstParameterIndex]];
+              const secondValue = secondParameterMode
+                ? array[secondParameterIndex]
+                : array[array[secondParameterIndex]];
+              if (firstValue !== 0) {
+                return secondValue;
+              } else {
+                return undefined;
+              }
+            },
         };
       case "06":
         return {
@@ -172,20 +192,21 @@ class Amplifier {
           numberOfParameter: 2,
           getIndexToJump: (
             firstParameterIndex,
-            secondParameterIndex
-          ) => array => {
-            const firstValue = firstParameterMode
-              ? array[firstParameterIndex]
-              : array[array[firstParameterIndex]];
-            const secondValue = secondParameterMode
-              ? array[secondParameterIndex]
-              : array[array[secondParameterIndex]];
-            if (firstValue === 0) {
-              return secondValue;
-            } else {
-              return undefined;
-            }
-          }
+            secondParameterIndex,
+          ) =>
+            (array) => {
+              const firstValue = firstParameterMode
+                ? array[firstParameterIndex]
+                : array[array[firstParameterIndex]];
+              const secondValue = secondParameterMode
+                ? array[secondParameterIndex]
+                : array[array[secondParameterIndex]];
+              if (firstValue === 0) {
+                return secondValue;
+              } else {
+                return undefined;
+              }
+            },
         };
       case "07":
         return {
@@ -194,21 +215,22 @@ class Amplifier {
           transformationFunction: (
             firstParameterIndex,
             secondParameterIndex,
-            thirdParameterIndex
-          ) => array => {
-            const firstValue = firstParameterMode
-              ? array[firstParameterIndex]
-              : array[array[firstParameterIndex]];
-            const secondValue = secondParameterMode
-              ? array[secondParameterIndex]
-              : array[array[secondParameterIndex]];
-            let thirdValue = firstValue < secondValue ? 1 : 0;
-            if (thirdParameterMode) {
-              array[thirdParameterIndex] = thirdValue;
-            } else {
-              array[array[thirdParameterIndex]] = thirdValue;
-            }
-          }
+            thirdParameterIndex,
+          ) =>
+            (array) => {
+              const firstValue = firstParameterMode
+                ? array[firstParameterIndex]
+                : array[array[firstParameterIndex]];
+              const secondValue = secondParameterMode
+                ? array[secondParameterIndex]
+                : array[array[secondParameterIndex]];
+              let thirdValue = firstValue < secondValue ? 1 : 0;
+              if (thirdParameterMode) {
+                array[thirdParameterIndex] = thirdValue;
+              } else {
+                array[array[thirdParameterIndex]] = thirdValue;
+              }
+            },
         };
       case "08":
         return {
@@ -217,25 +239,26 @@ class Amplifier {
           transformationFunction: (
             firstParameterIndex,
             secondParameterIndex,
-            thirdParameterIndex
-          ) => array => {
-            const firstValue = firstParameterMode
-              ? array[firstParameterIndex]
-              : array[array[firstParameterIndex]];
-            const secondValue = secondParameterMode
-              ? array[secondParameterIndex]
-              : array[array[secondParameterIndex]];
-            let thirdValue = firstValue === secondValue ? 1 : 0;
-            if (thirdParameterMode) {
-              array[thirdParameterIndex] = thirdValue;
-            } else {
-              array[array[thirdParameterIndex]] = thirdValue;
-            }
-          }
+            thirdParameterIndex,
+          ) =>
+            (array) => {
+              const firstValue = firstParameterMode
+                ? array[firstParameterIndex]
+                : array[array[firstParameterIndex]];
+              const secondValue = secondParameterMode
+                ? array[secondParameterIndex]
+                : array[array[secondParameterIndex]];
+              let thirdValue = firstValue === secondValue ? 1 : 0;
+              if (thirdParameterMode) {
+                array[thirdParameterIndex] = thirdValue;
+              } else {
+                array[array[thirdParameterIndex]] = thirdValue;
+              }
+            },
         };
       case "99":
         return {
-          opCode
+          opCode,
         };
       default:
         throw new Error(`Invalid Opcode: ${instructionAsString}`);
@@ -255,7 +278,7 @@ class Amplifier {
 
     let currentInstructionIndex = 0;
     let currentInstruction = this.instructionParser(
-      currentProgram[currentInstructionIndex]
+      currentProgram[currentInstructionIndex],
     );
 
     while (currentInstruction.opCode !== "99") {
@@ -265,7 +288,7 @@ class Amplifier {
       ) {
         const indexToJump = currentInstruction.getIndexToJump(
           currentInstructionIndex + 1,
-          currentInstructionIndex + 2
+          currentInstructionIndex + 2,
         )(currentProgram);
         if (indexToJump) {
           currentInstructionIndex = indexToJump;
@@ -273,7 +296,7 @@ class Amplifier {
           currentInstructionIndex += currentInstruction.numberOfParameter + 1;
         }
         currentInstruction = this.instructionParser(
-          currentProgram[currentInstructionIndex]
+          currentProgram[currentInstructionIndex],
         );
       } else {
         switch (currentInstruction.numberOfParameter) {
@@ -281,20 +304,20 @@ class Amplifier {
             currentInstruction.transformationFunction(
               currentInstructionIndex + 1,
               currentInstructionIndex + 2,
-              currentInstructionIndex + 3
+              currentInstructionIndex + 3,
             )(currentProgram);
             currentInstructionIndex += 4;
             currentInstruction = this.instructionParser(
-              currentProgram[currentInstructionIndex]
+              currentProgram[currentInstructionIndex],
             );
             break;
           case 1:
             currentInstruction.transformationFunction(
-              currentInstructionIndex + 1
+              currentInstructionIndex + 1,
             )(currentProgram);
             currentInstructionIndex += 2;
             currentInstruction = this.instructionParser(
-              currentProgram[currentInstructionIndex]
+              currentProgram[currentInstructionIndex],
             );
             break;
           default:
@@ -322,10 +345,9 @@ const fn1 = (program, seetings) => {
 };
 
 const fn2 = (program, seetings) => {
-
 };
 
 module.exports = {
   fn1,
-  fn2
+  fn2,
 };

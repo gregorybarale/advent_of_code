@@ -1,16 +1,16 @@
 function retrievePointFromWire(wirePath) {
-  const paths = wirePath.split(",").map(x => {
+  const paths = wirePath.split(",").map((x) => {
     var [direction, ...y] = x;
     return {
       direction,
-      length: Number.parseInt(y.join(""), 10)
+      length: Number.parseInt(y.join(""), 10),
     };
   });
 
   let points = [{ x: 0, y: 0, step: 0 }];
   let currentStep = 0;
 
-  paths.forEach(path => {
+  paths.forEach((path) => {
     const startPoint = points[points.length - 1];
     switch (path.direction) {
       case "U":
@@ -21,9 +21,9 @@ function retrievePointFromWire(wirePath) {
             return {
               x: startPoint.x,
               y: startPoint.y + index + 1,
-              step: currentStep
+              step: currentStep,
             };
-          })
+          }),
         ];
         break;
       case "D":
@@ -34,9 +34,9 @@ function retrievePointFromWire(wirePath) {
             return {
               x: startPoint.x,
               y: startPoint.y - index - 1,
-              step: currentStep
+              step: currentStep,
             };
-          })
+          }),
         ];
         break;
       case "L":
@@ -47,9 +47,9 @@ function retrievePointFromWire(wirePath) {
             return {
               x: startPoint.x - index - 1,
               y: startPoint.y,
-              step: currentStep
+              step: currentStep,
             };
-          })
+          }),
         ];
         break;
       case "R":
@@ -60,9 +60,9 @@ function retrievePointFromWire(wirePath) {
             return {
               x: startPoint.x + index + 1,
               y: startPoint.y,
-              step: currentStep
+              step: currentStep,
             };
-          })
+          }),
         ];
         break;
     }
@@ -71,7 +71,7 @@ function retrievePointFromWire(wirePath) {
   return points;
 }
 
-const fn1 = input => {
+const fn1 = (input) => {
   const points1 = retrievePointFromWire(input[0]);
   const points2 = retrievePointFromWire(input[1]);
 
@@ -101,12 +101,12 @@ const fn1 = input => {
 
   return Math.min(
     ...intersectionPoints
-      .filter(point => point.x !== 0 && point.y !== 0)
-      .map(point => Math.abs(point.x) + Math.abs(point.y))
+      .filter((point) => point.x !== 0 && point.y !== 0)
+      .map((point) => Math.abs(point.x) + Math.abs(point.y)),
   );
 };
 
-const fn2 = input => {
+const fn2 = (input) => {
   const points1 = retrievePointFromWire(input[0]);
   const points2 = retrievePointFromWire(input[1]);
 
@@ -134,8 +134,8 @@ const fn2 = input => {
         {
           x: mapPoints1[key].x,
           y: mapPoints1[key].y,
-          totalStep: mapPoints1[key].step + mapPoints2[key].step
-        }
+          totalStep: mapPoints1[key].step + mapPoints2[key].step,
+        },
       ];
     }
     return acc;
@@ -143,12 +143,12 @@ const fn2 = input => {
 
   return Math.min(
     ...intersectionPoints
-      .filter(point => point.x !== 0 || point.y !== 0)
-      .map(point => point.totalStep)
+      .filter((point) => point.x !== 0 || point.y !== 0)
+      .map((point) => point.totalStep),
   );
 };
 
 module.exports = {
   fn1,
-  fn2
+  fn2,
 };

@@ -21,18 +21,21 @@ for (let size = 1; size <= 2; size++) {
     topLeftX: 1,
     topLeftY: 1,
     power: 0,
-    size: size
+    size: size,
   };
   // Compute power for initial frame
-  for (let x = maxFrameForSize.topLeftX; x < maxFrameForSize.topLeftX + size; x++) {
-    for (let y = maxFrameForSize.topLeftY; y < maxFrameForSize.topLeftY + size; y++) {
+  for (
+    let x = maxFrameForSize.topLeftX; x < maxFrameForSize.topLeftX + size; x++
+  ) {
+    for (
+      let y = maxFrameForSize.topLeftY; y < maxFrameForSize.topLeftY + size; y++
+    ) {
       maxFrameForSize.power += cellsPower[`x${x}y${y}`];
     }
   }
 
   // Move Frame
   if (size !== 300) {
-    
   }
   console.log(`Size ${size} done`);
 }

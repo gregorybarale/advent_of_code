@@ -1,7 +1,7 @@
 const input = require("./input");
 const utils = require("./utils");
 
-const stars = input.map(rawStar => utils.parseRawData(rawStar));
+const stars = input.map((rawStar) => utils.parseRawData(rawStar));
 let time = 0;
 let minVolume = Number.POSITIVE_INFINITY;
 let timeMin = 0;

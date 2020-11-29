@@ -12,17 +12,21 @@ for (let x = minX; x <= maxX; x++) {
   for (let y = minY; y <= maxY; y++) {
     coordInAreaRaw.push({
       x,
-      y
+      y,
     });
   }
 }
 
-const coordInArea = coordInAreaRaw.map(coord => {
+const coordInArea = coordInAreaRaw.map((coord) => {
   const totalDistance = pointArr
-    .map(point => utils.computeDistance(coord, point)).reduce((acc, distance) => acc + distance, 0);
+    .map((point) => utils.computeDistance(coord, point)).reduce(
+      (acc, distance) => acc + distance,
+      0,
+    );
   return totalDistance;
 });
 
-const regionSize = coordInArea.filter(totalDistance => totalDistance < 10000).length;
+const regionSize =
+  coordInArea.filter((totalDistance) => totalDistance < 10000).length;
 
 console.log(regionSize);

@@ -17,7 +17,7 @@ for (let x = 1; x < areaWidth - squareWidth + 1; x++) {
       y,
       serialNumber,
       squareWidth,
-      squareLength
+      squareLength,
     );
     if (power > maxPower) {
       maxPower = power;

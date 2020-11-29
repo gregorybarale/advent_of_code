@@ -248,5 +248,5 @@ module.exports = [
   "mbhposgxgeauywyikztndvvjqr",
   "mbhposajgeauywfikztzdcvjqr",
   "mbhyoslxgeauywfikzsndcvxqr",
-  "mbhposlxgdauywfikmtndcljqr"
+  "mbhposlxgdauywfikmtndcljqr",
 ];

@@ -13,22 +13,22 @@ const testCases2 = [
   { input: 1969, result: 966 },
   { input: 100756, result: 50346 },
 ];
-testCases1.forEach(testCase => {
+testCases1.forEach((testCase) => {
   assert.equal(
     fn.fn1(testCase.input),
     testCase.result,
-    `Expect ${testCase.result} for ${
-    testCase.input
-    } input in part 1 instead of ${fn.fn1(testCase.input)}`
+    `Expect ${testCase.result} for ${testCase.input} input in part 1 instead of ${
+      fn.fn1(testCase.input)
+    }`,
   );
 });
 
-testCases2.forEach(testCase => {
+testCases2.forEach((testCase) => {
   assert.equal(
     fn.fn2(testCase.input),
     testCase.result,
-    `Expect ${testCase.result} for ${
-    testCase.input
-    } input in part 2 instead of ${fn.fn2(testCase.input)}`
+    `Expect ${testCase.result} for ${testCase.input} input in part 2 instead of ${
+      fn.fn2(testCase.input)
+    }`,
   );
 });

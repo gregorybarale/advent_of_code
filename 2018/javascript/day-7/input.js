@@ -99,5 +99,5 @@ module.exports = [
   "Step W must be finished before step R can begin.",
   "Step S must be finished before step D can begin.",
   "Step O must be finished before step B can begin.",
-  "Step I must be finished before step P can begin."
+  "Step I must be finished before step P can begin.",
 ];

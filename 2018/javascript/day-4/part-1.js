@@ -1,21 +1,21 @@
 const input = require("./input");
 const utils = require("./utils");
 
-const parsedInput = input.map(rawRecord => utils.parseRawRecord(rawRecord));
+const parsedInput = input.map((rawRecord) => utils.parseRawRecord(rawRecord));
 const sortPerDateParsedInput = utils.sortRecordPerDate(parsedInput);
 const shiftsRecords = utils.organizeRecordsPerGuard(sortPerDateParsedInput);
 
 console.log("Raw input compute");
 
-const timeAsleepPerShift = shiftsRecords.map(shifthRecords => ({
+const timeAsleepPerShift = shiftsRecords.map((shifthRecords) => ({
   idGuard: shifthRecords[0].idGuard,
-  timeAsleep: utils.computeTotalTimeAsleepPerShift(shifthRecords)
+  timeAsleep: utils.computeTotalTimeAsleepPerShift(shifthRecords),
 }));
 
 console.log("Time asleep per shift compute");
 
 const totalTimeAsleepPerGuard = {};
-timeAsleepPerShift.forEach(obj => {
+timeAsleepPerShift.forEach((obj) => {
   if (totalTimeAsleepPerGuard[obj.idGuard] === undefined) {
     totalTimeAsleepPerGuard[obj.idGuard] = obj.timeAsleep;
   } else {
@@ -40,18 +40,18 @@ for (let idGuard in totalTimeAsleepPerGuard) {
 console.log(`Big sleeper found: ${bigSleeperId}`);
 
 const shiftsRecordsFromBigSleeper = shiftsRecords.filter(
-  shiftRecords => shiftRecords[0].idGuard === bigSleeperId
+  (shiftRecords) => shiftRecords[0].idGuard === bigSleeperId,
 );
 
 console.log("Big sleeper shifts records filtered");
 
 const minutesAsleepForBigSleeperDetails = shiftsRecordsFromBigSleeper.map(
-  shiftRecords => utils.getMinuteSleepingForShiftRecords(shiftRecords)
+  (shiftRecords) => utils.getMinuteSleepingForShiftRecords(shiftRecords),
 );
 const minutesAsleepForBigSleeperCount = {};
 minutesAsleepForBigSleeperDetails
   .reduce((acc, nextArray) => [...acc, ...nextArray], [])
-  .forEach(minute => {
+  .forEach((minute) => {
     if (minutesAsleepForBigSleeperCount[minute] === undefined) {
       minutesAsleepForBigSleeperCount[minute] = 1;
     } else {

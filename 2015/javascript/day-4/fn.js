@@ -6,7 +6,7 @@ function getHash(s) {
   return hash.digest("hex");
 }
 
-const fn1 = input => {
+const fn1 = (input) => {
   let n = 1;
   while (getHash(`${input}${n}`).substring(0, 5) != "00000") {
     n++;
@@ -14,7 +14,7 @@ const fn1 = input => {
   return n;
 };
 
-const fn2 = input => {
+const fn2 = (input) => {
   let n = 254575;
   while (getHash(`${input}${n}`).substring(0, 6) != "000000") {
     n++;
@@ -24,5 +24,5 @@ const fn2 = input => {
 
 module.exports = {
   fn1,
-  fn2
+  fn2,
 };

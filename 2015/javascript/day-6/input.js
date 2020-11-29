@@ -298,5 +298,5 @@ module.exports = [
   "turn off 210,146 through 221,482",
   "turn off 209,780 through 572,894",
   "turn on 766,112 through 792,868",
-  "turn on 222,12 through 856,241"
+  "turn on 222,12 through 856,241",
 ];

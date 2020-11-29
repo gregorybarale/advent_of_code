@@ -1,4 +1,4 @@
-const fn1 = input => {
+const fn1 = (input) => {
   const vowel = "aeiou";
   const forbiddenWords = ["ab", "cd", "pq", "xy"];
   let vowelCount = 0;
@@ -8,8 +8,9 @@ const fn1 = input => {
   if (vowel.includes(charArray[0])) vowelCount++;
 
   for (let i = 1; i < charArray.length; i++) {
-    if (forbiddenWords.includes(`${charArray[i - 1]}${charArray[i]}`))
+    if (forbiddenWords.includes(`${charArray[i - 1]}${charArray[i]}`)) {
       return false;
+    }
     if (vowel.includes(charArray[i])) vowelCount++;
     if (charArray[i] === charArray[i - 1]) hasTwiceInARow = true;
   }
@@ -17,7 +18,7 @@ const fn1 = input => {
   return vowelCount >= 3 && hasTwiceInARow;
 };
 
-const fn2 = input => {
+const fn2 = (input) => {
   const charArray = input.split("");
 
   const arrayPair = [];
@@ -33,7 +34,7 @@ const fn2 = input => {
     }
     return map;
   }, {});
-  hasDoublePairNotOverlapping = Object.values(pairMap).some(value => {
+  hasDoublePairNotOverlapping = Object.values(pairMap).some((value) => {
     return (
       value.length >= 2 &&
       value.every((_, index, array) =>
@@ -54,5 +55,5 @@ const fn2 = input => {
 
 module.exports = {
   fn1,
-  fn2
+  fn2,
 };

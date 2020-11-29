@@ -1,4 +1,4 @@
-const fn1 = password => {
+const fn1 = (password) => {
   if (password.length !== 6) {
     return false;
   }
@@ -25,7 +25,7 @@ const fn1 = password => {
   return true;
 };
 
-const fn2 = password => {
+const fn2 = (password) => {
   const largerGroup = [];
   for (let i = 0; i < password.length - 2; i++) {
     if (
@@ -41,17 +41,16 @@ const fn2 = password => {
     if (
       !twoSameCriteriaNotInLargerGroup &&
       password[i] === password[i + 1] &&
-      largerGroup.every(g => !g.includes(password[i] + password[i + 1]))
+      largerGroup.every((g) => !g.includes(password[i] + password[i + 1]))
     ) {
       twoSameCriteriaNotInLargerGroup = true;
     }
   }
 
-  return twoSameCriteriaNotInLargerGroup && fn1(password)
+  return twoSameCriteriaNotInLargerGroup && fn1(password);
 };
 
 module.exports = {
   fn1,
-  fn2
+  fn2,
 };
-

@@ -2,11 +2,11 @@ const input = require("./input");
 const utils = require("./utils");
 
 const inputArr = input.split("");
-const dictionnaryArr = "abcdefghijklmnopqrstuvwxyz".split('');
+const dictionnaryArr = "abcdefghijklmnopqrstuvwxyz".split("");
 
-const counterArr = dictionnaryArr.map(char => {
+const counterArr = dictionnaryArr.map((char) => {
   return utils.reactChain(
-    inputArr.filter(c => c !== char).filter(c => c !== char.toUpperCase())
+    inputArr.filter((c) => c !== char).filter((c) => c !== char.toUpperCase()),
   ).length;
 });
 

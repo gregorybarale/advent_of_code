@@ -14,10 +14,10 @@ const testCases1 = [
       "D)I",
       "E)J",
       "J)K",
-      "K)L"
+      "K)L",
     ],
-    result: 42
-  }
+    result: 42,
+  },
 ];
 
 const testCases2 = [
@@ -37,26 +37,26 @@ const testCases2 = [
       "K)YOU",
       "I)SAN",
     ],
-    result: 4
-  }
+    result: 4,
+  },
 ];
 
-testCases1.forEach(testCase => {
+testCases1.forEach((testCase) => {
   assert.equal(
     fn.fn1(testCase.input),
     testCase.result,
-    `Expect ${testCase.result} for ${
-    testCase.input
-    } input in part 1 instead of ${fn.fn1(testCase.input)}`
+    `Expect ${testCase.result} for ${testCase.input} input in part 1 instead of ${
+      fn.fn1(testCase.input)
+    }`,
   );
 });
 
-testCases2.forEach(testCase => {
+testCases2.forEach((testCase) => {
   assert.equal(
     fn.fn2(testCase.input),
     testCase.result,
-    `Expect ${testCase.result} for ${
-    testCase.input
-    } input in part 2 instead of ${fn.fn2(testCase.input)}`
+    `Expect ${testCase.result} for ${testCase.input} input in part 2 instead of ${
+      fn.fn2(testCase.input)
+    }`,
   );
 });

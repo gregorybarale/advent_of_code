@@ -1,6 +1,6 @@
-const fn1 = mass => Math.floor(mass / 3) - 2;
+const fn1 = (mass) => Math.floor(mass / 3) - 2;
 
-const fn2 = mass => {
+const fn2 = (mass) => {
   let total = 0;
   let fuelToAdd = fn1(mass);
   while (fuelToAdd > 0) {
@@ -12,5 +12,5 @@ const fn2 = mass => {
 
 module.exports = {
   fn1,
-  fn2
+  fn2,
 };

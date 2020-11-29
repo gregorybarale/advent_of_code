@@ -1,7 +1,7 @@
 class CircularLinkList {
   constructor(firstData) {
     this.current = {
-      data: firstData
+      data: firstData,
     };
     this.current.previous = this.current;
     this.current.next = this.current;
@@ -38,5 +38,5 @@ class CircularLinkList {
 }
 
 module.exports = {
-  CircularLinkList
+  CircularLinkList,
 };

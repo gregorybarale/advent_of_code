@@ -1,10 +1,12 @@
-const parseRawRecord = rawRecord => {
+const parseRawRecord = (rawRecord) => {
   rawRecordArray = rawRecord.split(" ");
   const date = new Date(
-    `${rawRecordArray[0].replace("[", "")} ${rawRecordArray[1].replace(
-      "]",
-      ""
-    )}`
+    `${rawRecordArray[0].replace("[", "")} ${
+      rawRecordArray[1].replace(
+        "]",
+        "",
+      )
+    }`,
   );
   const isBeginShiftRecord = rawRecordArray.length === 6;
   if (isBeginShiftRecord) {
@@ -13,7 +15,7 @@ const parseRawRecord = rawRecord => {
       date,
       isBeginShiftRecord,
       idGuard,
-      isWakingUp: undefined
+      isWakingUp: undefined,
     };
   }
   const isWakingUp = rawRecordArray[2] === "wakes";
@@ -21,11 +23,11 @@ const parseRawRecord = rawRecord => {
     date,
     isBeginShiftRecord,
     idGuard: undefined,
-    isWakingUp
+    isWakingUp,
   };
 };
 
-const sortRecordPerDate = recordsArray => {
+const sortRecordPerDate = (recordsArray) => {
   return recordsArray.sort((rA, rB) => {
     const dA = rA.date,
       dB = rB.date;
@@ -39,15 +41,15 @@ const sortRecordPerDate = recordsArray => {
   });
 };
 
-const organizeRecordsPerGuard = recordsArray => {
+const organizeRecordsPerGuard = (recordsArray) => {
   const organizedRecords = [];
-  recordsArray.forEach(record => {
+  recordsArray.forEach((record) => {
     if (record.isBeginShiftRecord) {
       organizedRecords.push([record]);
     } else {
       const recordWithId = {
         ...record,
-        idGuard: organizedRecords[organizedRecords.length - 1][0].idGuard
+        idGuard: organizedRecords[organizedRecords.length - 1][0].idGuard,
       };
       organizedRecords[organizedRecords.length - 1].push(recordWithId);
     }
@@ -55,13 +57,13 @@ const organizeRecordsPerGuard = recordsArray => {
   return organizedRecords;
 };
 
-const computeTotalTimeAsleepPerShift = shiftRecords => {
+const computeTotalTimeAsleepPerShift = (shiftRecords) => {
   const shiftRecordsWithoutBeginShift = shiftRecords.filter(
-    r => !r.isBeginShiftRecord
+    (r) => !r.isBeginShiftRecord,
   );
   let totalTime = 0;
   let currentFallAsleepDate = undefined;
-  shiftRecordsWithoutBeginShift.forEach(r => {
+  shiftRecordsWithoutBeginShift.forEach((r) => {
     if (r.isWakingUp) {
       const sleepDuration = r.date.getTime() - currentFallAsleepDate.getTime();
       const hoursAsleep = new Date(sleepDuration).getUTCHours();
@@ -74,13 +76,13 @@ const computeTotalTimeAsleepPerShift = shiftRecords => {
   return totalTime;
 };
 
-const getMinuteSleepingForShiftRecords = shiftRecords => {
+const getMinuteSleepingForShiftRecords = (shiftRecords) => {
   const shiftRecordsWithoutBeginShift = shiftRecords.filter(
-    r => !r.isBeginShiftRecord
+    (r) => !r.isBeginShiftRecord,
   );
   const minuteArray = [];
   let currentFallAsleepDate = undefined;
-  shiftRecordsWithoutBeginShift.forEach(r => {
+  shiftRecordsWithoutBeginShift.forEach((r) => {
     if (r.isWakingUp) {
       const sleepDuration = r.date.getTime() - currentFallAsleepDate.getTime();
       const hoursAsleep = new Date(sleepDuration).getUTCHours();
@@ -105,5 +107,5 @@ module.exports = {
   sortRecordPerDate,
   organizeRecordsPerGuard,
   computeTotalTimeAsleepPerShift,
-  getMinuteSleepingForShiftRecords
+  getMinuteSleepingForShiftRecords,
 };
