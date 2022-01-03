@@ -25,10 +25,14 @@ for (let size = 1; size <= 2; size++) {
   };
   // Compute power for initial frame
   for (
-    let x = maxFrameForSize.topLeftX; x < maxFrameForSize.topLeftX + size; x++
+    let x = maxFrameForSize.topLeftX;
+    x < maxFrameForSize.topLeftX + size;
+    x++
   ) {
     for (
-      let y = maxFrameForSize.topLeftY; y < maxFrameForSize.topLeftY + size; y++
+      let y = maxFrameForSize.topLeftY;
+      y < maxFrameForSize.topLeftY + size;
+      y++
     ) {
       maxFrameForSize.power += cellsPower[`x${x}y${y}`];
     }
