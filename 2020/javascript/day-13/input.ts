@@ -1,0 +1,10 @@
+import { IAoCInput } from "../../../utils/javascript/deno-utils/input.ts";
+
+export const input: IAoCInput = {
+  "year": 2020,
+  "day": 13,
+  "input": [
+    "1000053",
+    "19,x,x,x,x,x,x,x,x,x,x,x,x,37,x,x,x,x,x,523,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,13,x,x,x,x,23,x,x,x,x,x,29,x,547,x,x,x,x,x,x,x,x,x,41,x,x,x,x,x,x,17",
+  ],
+};
