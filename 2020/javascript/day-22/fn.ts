@@ -126,10 +126,9 @@ const isGameStillPlayable: (game: IGame) => boolean = (
 
 const areGamesConfigurationSame: (
   reference: IGame,
-) => (game: IGame) => boolean = (reference: IGame) =>
-  (game: IGame) =>
-    reference.player1Deck.join("") === game.player1Deck.join("") &&
-    reference.player2Deck.join("") === game.player2Deck.join("");
+) => (game: IGame) => boolean = (reference: IGame) => (game: IGame) =>
+  reference.player1Deck.join("") === game.player1Deck.join("") &&
+  reference.player2Deck.join("") === game.player2Deck.join("");
 
 const computeWinnerScore: (game: IGame) => number = (
   { player1Deck, player2Deck }: IGame,

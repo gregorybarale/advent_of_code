@@ -47,16 +47,16 @@ const parser: (input: IAoCInput) => IWaitingArea = ({ input }: IAoCInput) => {
 
 const getSeatInArea: (
   area: IWaitingArea,
-) => (coordinate: ICoordinate) => ISeat = ({ layout }: IWaitingArea) =>
-  (coordinate: ICoordinate) =>
+) => (coordinate: ICoordinate) => ISeat =
+  ({ layout }: IWaitingArea) => (coordinate: ICoordinate) =>
     layout.find((value) =>
       coordinate.x === value.coordinate.x && coordinate.y === value.coordinate.y
     ) as ISeat;
 
 const getStrictAdjacentSeats: (
   area: IWaitingArea,
-) => (seat: ISeat) => ReadonlyArray<ISeat> = (area: IWaitingArea) =>
-  (seat: ISeat) => {
+) => (seat: ISeat) => ReadonlyArray<ISeat> =
+  (area: IWaitingArea) => (seat: ISeat) => {
     let adjacentSeat: Array<ISeat> = [];
 
     const xToTake = [
@@ -88,13 +88,31 @@ const getStrictAdjacentSeats: (
 const getNextLeftSeat: (area: IWaitingArea) => (seat: ISeat) => ISeat | null = (
   area: IWaitingArea,
 ) =>
-  (seat: ISeat) => {
+(seat: ISeat) => {
+  const { x, y } = seat.coordinate;
+  let nextAbscisse = x;
+  let nextSeat = undefined;
+  while (nextSeat === undefined) {
+    nextAbscisse -= 1;
+    if (nextAbscisse < area.xMin) {
+      nextSeat = null;
+    } else if (
+      getSeatInArea(area)({ x: nextAbscisse, y }).state !== StateEnum.FLOOR
+    ) {
+      nextSeat = getSeatInArea(area)({ x: nextAbscisse, y });
+    }
+  }
+  return nextSeat as ISeat | null;
+};
+
+const getNextRightSeat: (area: IWaitingArea) => (seat: ISeat) => ISeat | null =
+  (area: IWaitingArea) => (seat: ISeat) => {
     const { x, y } = seat.coordinate;
     let nextAbscisse = x;
     let nextSeat = undefined;
     while (nextSeat === undefined) {
-      nextAbscisse -= 1;
-      if (nextAbscisse < area.xMin) {
+      nextAbscisse += 1;
+      if (nextAbscisse > area.xMax) {
         nextSeat = null;
       } else if (
         getSeatInArea(area)({ x: nextAbscisse, y }).state !== StateEnum.FLOOR
@@ -105,159 +123,134 @@ const getNextLeftSeat: (area: IWaitingArea) => (seat: ISeat) => ISeat | null = (
     return nextSeat as ISeat | null;
   };
 
-const getNextRightSeat: (area: IWaitingArea) => (seat: ISeat) => ISeat | null =
-  (area: IWaitingArea) =>
-    (seat: ISeat) => {
-      const { x, y } = seat.coordinate;
-      let nextAbscisse = x;
-      let nextSeat = undefined;
-      while (nextSeat === undefined) {
-        nextAbscisse += 1;
-        if (nextAbscisse > area.xMax) {
-          nextSeat = null;
-        } else if (
-          getSeatInArea(area)({ x: nextAbscisse, y }).state !== StateEnum.FLOOR
-        ) {
-          nextSeat = getSeatInArea(area)({ x: nextAbscisse, y });
-        }
-      }
-      return nextSeat as ISeat | null;
-    };
-
 const getNextUpperSeat: (area: IWaitingArea) => (seat: ISeat) => ISeat | null =
-  (area: IWaitingArea) =>
-    (seat: ISeat) => {
-      const { x, y } = seat.coordinate;
-      let nextOrdinate = y;
-      let nextSeat = undefined;
-      while (nextSeat === undefined) {
-        nextOrdinate -= 1;
-        if (nextOrdinate < area.yMin) {
-          nextSeat = null;
-        } else if (
-          getSeatInArea(area)({ x, y: nextOrdinate }).state !== StateEnum.FLOOR
-        ) {
-          nextSeat = getSeatInArea(area)({ x, y: nextOrdinate });
-        }
+  (area: IWaitingArea) => (seat: ISeat) => {
+    const { x, y } = seat.coordinate;
+    let nextOrdinate = y;
+    let nextSeat = undefined;
+    while (nextSeat === undefined) {
+      nextOrdinate -= 1;
+      if (nextOrdinate < area.yMin) {
+        nextSeat = null;
+      } else if (
+        getSeatInArea(area)({ x, y: nextOrdinate }).state !== StateEnum.FLOOR
+      ) {
+        nextSeat = getSeatInArea(area)({ x, y: nextOrdinate });
       }
-      return nextSeat as ISeat | null;
-    };
+    }
+    return nextSeat as ISeat | null;
+  };
 
 const getNextLowerSeat: (area: IWaitingArea) => (seat: ISeat) => ISeat | null =
-  (area: IWaitingArea) =>
-    (seat: ISeat) => {
-      const { x, y } = seat.coordinate;
-      let nextOrdinate = y;
-      let nextSeat = undefined;
-      while (nextSeat === undefined) {
-        nextOrdinate += 1;
-        if (nextOrdinate > area.yMax) {
-          nextSeat = null;
-        } else if (
-          getSeatInArea(area)({ x, y: nextOrdinate }).state !== StateEnum.FLOOR
-        ) {
-          nextSeat = getSeatInArea(area)({ x, y: nextOrdinate });
-        }
+  (area: IWaitingArea) => (seat: ISeat) => {
+    const { x, y } = seat.coordinate;
+    let nextOrdinate = y;
+    let nextSeat = undefined;
+    while (nextSeat === undefined) {
+      nextOrdinate += 1;
+      if (nextOrdinate > area.yMax) {
+        nextSeat = null;
+      } else if (
+        getSeatInArea(area)({ x, y: nextOrdinate }).state !== StateEnum.FLOOR
+      ) {
+        nextSeat = getSeatInArea(area)({ x, y: nextOrdinate });
       }
-      return nextSeat as ISeat | null;
-    };
+    }
+    return nextSeat as ISeat | null;
+  };
 
 const getNextLeftUpperSeat: (
   area: IWaitingArea,
-) => (seat: ISeat) => ISeat | null = (area: IWaitingArea) =>
-  (seat: ISeat) => {
-    const { x, y } = seat.coordinate;
-    let nextAbscisse = x;
-    let nextOrdinate = y;
-    let nextSeat = undefined;
-    while (nextSeat === undefined) {
-      nextAbscisse -= 1;
-      nextOrdinate -= 1;
-      if (nextAbscisse < area.xMin || nextOrdinate < area.yMin) {
-        nextSeat = null;
-      } else if (
-        getSeatInArea(area)({ x: nextAbscisse, y: nextOrdinate }).state !==
-          StateEnum.FLOOR
-      ) {
-        nextSeat = getSeatInArea(area)({ x: nextAbscisse, y: nextOrdinate });
-      }
+) => (seat: ISeat) => ISeat | null = (area: IWaitingArea) => (seat: ISeat) => {
+  const { x, y } = seat.coordinate;
+  let nextAbscisse = x;
+  let nextOrdinate = y;
+  let nextSeat = undefined;
+  while (nextSeat === undefined) {
+    nextAbscisse -= 1;
+    nextOrdinate -= 1;
+    if (nextAbscisse < area.xMin || nextOrdinate < area.yMin) {
+      nextSeat = null;
+    } else if (
+      getSeatInArea(area)({ x: nextAbscisse, y: nextOrdinate }).state !==
+        StateEnum.FLOOR
+    ) {
+      nextSeat = getSeatInArea(area)({ x: nextAbscisse, y: nextOrdinate });
     }
-    return nextSeat as ISeat | null;
-  };
+  }
+  return nextSeat as ISeat | null;
+};
 
 const getNextRightUpperSeat: (
   area: IWaitingArea,
-) => (seat: ISeat) => ISeat | null = (area: IWaitingArea) =>
-  (seat: ISeat) => {
-    const { x, y } = seat.coordinate;
-    let nextAbscisse = x;
-    let nextOrdinate = y;
-    let nextSeat = undefined;
-    while (nextSeat === undefined) {
-      nextAbscisse += 1;
-      nextOrdinate -= 1;
-      if (nextAbscisse > area.xMax || nextOrdinate < area.yMin) {
-        nextSeat = null;
-      } else if (
-        getSeatInArea(area)({ x: nextAbscisse, y: nextOrdinate }).state !==
-          StateEnum.FLOOR
-      ) {
-        nextSeat = getSeatInArea(area)({ x: nextAbscisse, y: nextOrdinate });
-      }
+) => (seat: ISeat) => ISeat | null = (area: IWaitingArea) => (seat: ISeat) => {
+  const { x, y } = seat.coordinate;
+  let nextAbscisse = x;
+  let nextOrdinate = y;
+  let nextSeat = undefined;
+  while (nextSeat === undefined) {
+    nextAbscisse += 1;
+    nextOrdinate -= 1;
+    if (nextAbscisse > area.xMax || nextOrdinate < area.yMin) {
+      nextSeat = null;
+    } else if (
+      getSeatInArea(area)({ x: nextAbscisse, y: nextOrdinate }).state !==
+        StateEnum.FLOOR
+    ) {
+      nextSeat = getSeatInArea(area)({ x: nextAbscisse, y: nextOrdinate });
     }
-    return nextSeat as ISeat | null;
-  };
+  }
+  return nextSeat as ISeat | null;
+};
 
 const getNextLeftLowerSeat: (
   area: IWaitingArea,
-) => (seat: ISeat) => ISeat | null = (area: IWaitingArea) =>
-  (seat: ISeat) => {
-    const { x, y } = seat.coordinate;
-    let nextAbscisse = x;
-    let nextOrdinate = y;
-    let nextSeat = undefined;
-    while (nextSeat === undefined) {
-      nextAbscisse -= 1;
-      nextOrdinate += 1;
-      if (nextAbscisse < area.xMin || nextOrdinate > area.yMax) {
-        nextSeat = null;
-      } else if (
-        getSeatInArea(area)({ x: nextAbscisse, y: nextOrdinate }).state !==
-          StateEnum.FLOOR
-      ) {
-        nextSeat = getSeatInArea(area)({ x: nextAbscisse, y: nextOrdinate });
-      }
+) => (seat: ISeat) => ISeat | null = (area: IWaitingArea) => (seat: ISeat) => {
+  const { x, y } = seat.coordinate;
+  let nextAbscisse = x;
+  let nextOrdinate = y;
+  let nextSeat = undefined;
+  while (nextSeat === undefined) {
+    nextAbscisse -= 1;
+    nextOrdinate += 1;
+    if (nextAbscisse < area.xMin || nextOrdinate > area.yMax) {
+      nextSeat = null;
+    } else if (
+      getSeatInArea(area)({ x: nextAbscisse, y: nextOrdinate }).state !==
+        StateEnum.FLOOR
+    ) {
+      nextSeat = getSeatInArea(area)({ x: nextAbscisse, y: nextOrdinate });
     }
-    return nextSeat as ISeat | null;
-  };
+  }
+  return nextSeat as ISeat | null;
+};
 
 const getNextRightLowerSeat: (
   area: IWaitingArea,
-) => (seat: ISeat) => ISeat | null = (area: IWaitingArea) =>
-  (seat: ISeat) => {
-    const { x, y } = seat.coordinate;
-    let nextAbscisse = x;
-    let nextOrdinate = y;
-    let nextSeat = undefined;
-    while (nextSeat === undefined) {
-      nextAbscisse += 1;
-      nextOrdinate += 1;
-      if (nextAbscisse > area.xMax || nextOrdinate > area.yMax) {
-        nextSeat = null;
-      } else if (
-        getSeatInArea(area)({ x: nextAbscisse, y: nextOrdinate }).state !==
-          StateEnum.FLOOR
-      ) {
-        nextSeat = getSeatInArea(area)({ x: nextAbscisse, y: nextOrdinate });
-      }
+) => (seat: ISeat) => ISeat | null = (area: IWaitingArea) => (seat: ISeat) => {
+  const { x, y } = seat.coordinate;
+  let nextAbscisse = x;
+  let nextOrdinate = y;
+  let nextSeat = undefined;
+  while (nextSeat === undefined) {
+    nextAbscisse += 1;
+    nextOrdinate += 1;
+    if (nextAbscisse > area.xMax || nextOrdinate > area.yMax) {
+      nextSeat = null;
+    } else if (
+      getSeatInArea(area)({ x: nextAbscisse, y: nextOrdinate }).state !==
+        StateEnum.FLOOR
+    ) {
+      nextSeat = getSeatInArea(area)({ x: nextAbscisse, y: nextOrdinate });
     }
-    return nextSeat as ISeat | null;
-  };
+  }
+  return nextSeat as ISeat | null;
+};
 
 const getAdjacentInSightSeats: (
   area: IWaitingArea,
-) => (seat: ISeat) => ReadonlyArray<ISeat> = (area: IWaitingArea) =>
-  (seat: ISeat) =>
+) => (seat: ISeat) => ReadonlyArray<ISeat> =
+  (area: IWaitingArea) => (seat: ISeat) =>
     [
       getNextLeftSeat(area)(seat),
       getNextLeftUpperSeat(area)(seat),
@@ -275,8 +268,8 @@ const countOccupiedSeat: (seats: ReadonlyArray<ISeat>) => number = (
 
 const compareArea: (
   area1: IWaitingArea,
-) => (area2: IWaitingArea) => boolean = (area1: IWaitingArea) =>
-  (area2: IWaitingArea) => {
+) => (area2: IWaitingArea) => boolean =
+  (area1: IWaitingArea) => (area2: IWaitingArea) => {
     return area1.xMin === area2.xMin &&
       area1.xMax === area2.xMax &&
       area1.yMin === area2.yMin &&
@@ -303,60 +296,60 @@ const runSeatBattleRoyal: (doPrint: boolean) => (
   ) => (seat: ISeat) => ReadonlyArray<ISeat>,
 ) => (initialArea: IWaitingArea, maxAdjacentOccupied: number) => IWaitingArea =
   (doPrint: boolean) =>
-    (
-      getAdjacentSeat: (
-        area: IWaitingArea,
-      ) => (seat: ISeat) => ReadonlyArray<ISeat>,
-    ) =>
-      (initialArea: IWaitingArea, maxAdjacentOccupied: number) => {
-        const currentArea: IWaitingArea = {
-          ...initialArea,
-          layout: [...initialArea.layout],
-        };
+  (
+    getAdjacentSeat: (
+      area: IWaitingArea,
+    ) => (seat: ISeat) => ReadonlyArray<ISeat>,
+  ) =>
+  (initialArea: IWaitingArea, maxAdjacentOccupied: number) => {
+    const currentArea: IWaitingArea = {
+      ...initialArea,
+      layout: [...initialArea.layout],
+    };
 
-        let isSameArea = false;
+    let isSameArea = false;
 
-        while (!isSameArea) {
-          const newLayout: ReadonlyArray<ISeat> = currentArea.layout.map(
-            (seat) => {
-              let newSeat = { ...seat };
-              const numberOfAdjacentOccupied = countOccupiedSeat(
-                getAdjacentSeat(currentArea)(seat),
-              );
-              switch (seat.state) {
-                case StateEnum.FLOOR:
-                  break;
-                case StateEnum.EMPTY:
-                  newSeat.state = numberOfAdjacentOccupied === 0
-                    ? StateEnum.OCCUPIED
-                    : StateEnum.EMPTY;
-                  break;
-                case StateEnum.OCCUPIED:
-                  newSeat.state =
-                    numberOfAdjacentOccupied >= maxAdjacentOccupied
-                      ? StateEnum.EMPTY : StateEnum.OCCUPIED;
-                  break;
-              }
-              return newSeat;
-            },
+    while (!isSameArea) {
+      const newLayout: ReadonlyArray<ISeat> = currentArea.layout.map(
+        (seat) => {
+          let newSeat = { ...seat };
+          const numberOfAdjacentOccupied = countOccupiedSeat(
+            getAdjacentSeat(currentArea)(seat),
           );
-
-          isSameArea = compareArea(currentArea)({
-            ...currentArea,
-            layout: newLayout,
-          });
-
-          currentArea.layout = newLayout;
-
-          if (doPrint) {
-            getLayoutAsPrintable(currentArea).map((row) => {
-              console.log(row);
-            });
+          switch (seat.state) {
+            case StateEnum.FLOOR:
+              break;
+            case StateEnum.EMPTY:
+              newSeat.state = numberOfAdjacentOccupied === 0
+                ? StateEnum.OCCUPIED
+                : StateEnum.EMPTY;
+              break;
+            case StateEnum.OCCUPIED:
+              newSeat.state = numberOfAdjacentOccupied >= maxAdjacentOccupied
+                ? StateEnum.EMPTY
+                : StateEnum.OCCUPIED;
+              break;
           }
-        }
+          return newSeat;
+        },
+      );
 
-        return currentArea;
-      };
+      isSameArea = compareArea(currentArea)({
+        ...currentArea,
+        layout: newLayout,
+      });
+
+      currentArea.layout = newLayout;
+
+      if (doPrint) {
+        getLayoutAsPrintable(currentArea).map((row) => {
+          console.log(row);
+        });
+      }
+    }
+
+    return currentArea;
+  };
 
 export const fn1 = (input: IAoCInput) => {
   const initialArea = parser(input);

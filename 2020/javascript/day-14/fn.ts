@@ -45,32 +45,32 @@ const convertBiteArrayToNumber: (arr: BiteArray) => number = (arr: BiteArray) =>
 const applyMaskToValue: (mask: BiteArray) => (value: BiteArray) => BiteArray = (
   mask: BiteArray,
 ) =>
-  (value: BiteArray) => {
-    const temp = [
-      ...Array.from({ length: mask.length - value.length }, (_) => "0"),
-      ...value,
-    ];
+(value: BiteArray) => {
+  const temp = [
+    ...Array.from({ length: mask.length - value.length }, (_) => "0"),
+    ...value,
+  ];
 
-    const result = [];
-    for (let i = 0; i < mask.length; i++) {
-      switch (mask[i]) {
-        case "X":
-          result.push(temp[i]);
-          break;
-        case "1":
-          result.push("1");
-          break;
-        case "0":
-          result.push("0");
-      }
+  const result = [];
+  for (let i = 0; i < mask.length; i++) {
+    switch (mask[i]) {
+      case "X":
+        result.push(temp[i]);
+        break;
+      case "1":
+        result.push("1");
+        break;
+      case "0":
+        result.push("0");
     }
-    return result as BiteArray;
-  };
+  }
+  return result as BiteArray;
+};
 
 const getAddressesTroughMask: (
   mask: BiteArray,
-) => (address: BiteArray) => ReadonlyArray<BiteArray> = (mask: BiteArray) =>
-  (address: BiteArray) => {
+) => (address: BiteArray) => ReadonlyArray<BiteArray> =
+  (mask: BiteArray) => (address: BiteArray) => {
     const temp = [
       ...Array.from({ length: mask.length - address.length }, (_) => "0"),
       ...address,
@@ -108,19 +108,19 @@ const getMaskPossibility: (mask: BiteArray) => ReadonlyArray<BiteArray> = (
 export const applyMaskToNumber: (mask: string) => (n: number) => number = (
   mask: string,
 ) =>
-  (n: number) =>
-    convertBiteArrayToNumber(
-      applyMaskToValue(
-        convertMaskToBiteArray(mask),
-      )(
-        convertNumberToBiteArray(n),
-      ),
-    );
+(n: number) =>
+  convertBiteArrayToNumber(
+    applyMaskToValue(
+      convertMaskToBiteArray(mask),
+    )(
+      convertNumberToBiteArray(n),
+    ),
+  );
 
 export const applyMaskToAddress: (
   mask: string,
-) => (address: number) => ReadonlyArray<number> = (mask: string) =>
-  (address: number) =>
+) => (address: number) => ReadonlyArray<number> =
+  (mask: string) => (address: number) =>
     getAddressesTroughMask(
       convertMaskToBiteArray(mask),
     )(

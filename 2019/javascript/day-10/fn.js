@@ -14,8 +14,8 @@ const getAstroidCoordonate = (stellarMap) => {
   return astroids;
 };
 
-const checkIfAstroidBetween = (astroidOrigin, astroidEnd) =>
-  (astroidToTest) => {
+const checkIfAstroidBetween =
+  (astroidOrigin, astroidEnd) => (astroidToTest) => {
     if (astroidOrigin.x === astroidEnd.x && astroidOrigin.y === astroidEnd.y) {
       throw new Error(
         "[checkIfAstroidBetween] Origin and End must be different",

@@ -32,12 +32,11 @@ const generateCheckFn = (busIds: ReadonlyArray<string>) =>
     (n: number) => boolean
   >;
 
-export const fn2 = (startingNumber: number) =>
-  ({ input }: IAoCInput) => {
-    const rawbusIds = input[1].split(",");
+export const fn2 = (startingNumber: number) => ({ input }: IAoCInput) => {
+  const rawbusIds = input[1].split(",");
 
-    return undefined;
-  };
+  return undefined;
+};
 
 //while (!checkNumberFunctions.every((fn) => fn(result))) {
 //  result += 1;

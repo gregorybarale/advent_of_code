@@ -52,26 +52,25 @@ const parser: (input: IAoCInput) => {
 
 const generateCheckerFn: (
   dictionnary: RulesMap,
-) => (ids: ReadonlyArray<number>) => CheckerFn = (dictionnary: RulesMap) =>
-  (ids: ReadonlyArray<number>) => {
-    return (map: RulesMap) =>
-      (str: string) => {
-        let stringToCheck = str;
-        for (let j = 0; j < ids.length - 1; j++) {
-          const validString = getSubStringValid(
-            (map.get(ids[j]) as CheckerFn)(map),
-          )(stringToCheck);
-          stringToCheck = stringToCheck.substring(validString.length);
-          if (stringToCheck.length === 0) return false;
-        }
-        return (map.get(ids[ids.length - 1]) as CheckerFn)(map)(stringToCheck);
-      };
+) => (ids: ReadonlyArray<number>) => CheckerFn =
+  (dictionnary: RulesMap) => (ids: ReadonlyArray<number>) => {
+    return (map: RulesMap) => (str: string) => {
+      let stringToCheck = str;
+      for (let j = 0; j < ids.length - 1; j++) {
+        const validString = getSubStringValid(
+          (map.get(ids[j]) as CheckerFn)(map),
+        )(stringToCheck);
+        stringToCheck = stringToCheck.substring(validString.length);
+        if (stringToCheck.length === 0) return false;
+      }
+      return (map.get(ids[ids.length - 1]) as CheckerFn)(map)(stringToCheck);
+    };
   };
 
 const getSubStringValid: (
   fn: (s: string) => boolean,
-) => (value: string) => string = (fn: (s: string) => boolean) =>
-  (value: string) => {
+) => (value: string) => string =
+  (fn: (s: string) => boolean) => (value: string) => {
     let indexEnd = 1;
     while (indexEnd <= value.length) {
       console.log(value.substring(0, indexEnd));

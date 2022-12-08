@@ -30,22 +30,22 @@ const findSuitableAdapterWithLessOutput: (
 ) => (currentEffectiveJoltage: number) => IAdapter = (
   adaptersDictionnary: ReadonlyArray<IAdapter>,
 ) =>
-  (currentEffectiveJoltage: number) =>
-    [...findSuitableAdapter(adaptersDictionnary)(currentEffectiveJoltage)].sort(
-      compareAdapter,
-    )[0];
+(currentEffectiveJoltage: number) =>
+  [...findSuitableAdapter(adaptersDictionnary)(currentEffectiveJoltage)].sort(
+    compareAdapter,
+  )[0];
 
 const findSuitableAdapter: (
   adaptersDictionnary: ReadonlyArray<IAdapter>,
 ) => (currentEffectiveJoltage: number) => ReadonlyArray<IAdapter> = (
   adaptersDictionnary: ReadonlyArray<IAdapter>,
 ) =>
-  (currentEffectiveJoltage: number) => {
-    const viableAdapters = adaptersDictionnary.filter((adapter) =>
-      adapter.possibleInputs.includes(currentEffectiveJoltage)
-    );
-    return viableAdapters;
-  };
+(currentEffectiveJoltage: number) => {
+  const viableAdapters = adaptersDictionnary.filter((adapter) =>
+    adapter.possibleInputs.includes(currentEffectiveJoltage)
+  );
+  return viableAdapters;
+};
 
 export const fn1 = (input: IAoCInput) => {
   const adaptersDictionnary = parser(input);
@@ -92,8 +92,8 @@ const isAdapterInStep: (
     adapter: IAdapter;
   }>,
 ) =>
-  (adapter: IAdapter) =>
-    step.some((value) => value.adapter.joltage === adapter.joltage);
+(adapter: IAdapter) =>
+  step.some((value) => value.adapter.joltage === adapter.joltage);
 
 const getNextStep: (
   dictionnary: ReadonlyArray<IAdapter>,
@@ -108,52 +108,52 @@ const getNextStep: (
 }> = (
   dictionnary: ReadonlyArray<IAdapter>,
 ) =>
-  (
-    currentStep: ReadonlyArray<{
-      weight: number;
-      adapter: IAdapter;
-    }>,
-  ) =>
-    currentStep.reduce((previousValue, currentValue) => {
-      let nextStep = [...previousValue];
+(
+  currentStep: ReadonlyArray<{
+    weight: number;
+    adapter: IAdapter;
+  }>,
+) =>
+  currentStep.reduce((previousValue, currentValue) => {
+    let nextStep = [...previousValue];
 
-      const nextAdapters = currentValue.adapter.possibleOutputs.map((joltage) =>
-        dictionnary.find((adapter) => joltage === adapter.joltage)
-      ).filter((adapter) => Boolean(adapter)) as ReadonlyArray<IAdapter>;
+    const nextAdapters = currentValue.adapter.possibleOutputs.map((joltage) =>
+      dictionnary.find((adapter) => joltage === adapter.joltage)
+    ).filter((adapter) => Boolean(adapter)) as ReadonlyArray<IAdapter>;
 
-      nextAdapters.forEach((adapter) => {
-        if (isAdapterInStep(nextStep)(adapter)) {
-          const stepElement = nextStep.find((value) =>
-            value.adapter.joltage === adapter.joltage
-          ) as {
-            weight: number;
-            adapter: IAdapter;
-          };
-          nextStep = [
-            ...nextStep.filter((value) =>
-              value.adapter.joltage !== adapter.joltage
-            ),
-            {
-              ...stepElement,
-              weight: stepElement.weight + currentValue.weight,
-            },
-          ];
-        } else {
-          nextStep = [
-            ...nextStep,
-            {
-              adapter,
-              weight: currentValue.weight,
-            },
-          ];
-        }
-      });
+    nextAdapters.forEach((adapter) => {
+      if (isAdapterInStep(nextStep)(adapter)) {
+        const stepElement = nextStep.find((value) =>
+          value.adapter.joltage === adapter.joltage
+        ) as {
+          weight: number;
+          adapter: IAdapter;
+        };
+        nextStep = [
+          ...nextStep.filter((value) =>
+            value.adapter.joltage !== adapter.joltage
+          ),
+          {
+            ...stepElement,
+            weight: stepElement.weight + currentValue.weight,
+          },
+        ];
+      } else {
+        nextStep = [
+          ...nextStep,
+          {
+            adapter,
+            weight: currentValue.weight,
+          },
+        ];
+      }
+    });
 
-      return nextStep;
-    }, [] as ReadonlyArray<{
-      weight: number;
-      adapter: IAdapter;
-    }>);
+    return nextStep;
+  }, [] as ReadonlyArray<{
+    weight: number;
+    adapter: IAdapter;
+  }>);
 
 export const fn2 = (input: IAoCInput) => {
   const adaptersDictionnary = parser(input);

@@ -98,6 +98,8 @@ const theFinalMaxiSleeperGuardOnThisMinute =
 
 console.log(`The guard: ${theFinalMaxiSleeperGuardOnThisMinute}`);
 console.log(
-  `Final result: ${theFinalMaxiSleeperGuardOnThisMinute.idGuard *
-    theFinalMaxiSleeperGuardOnThisMinute.minute}`,
+  `Final result: ${
+    theFinalMaxiSleeperGuardOnThisMinute.idGuard *
+    theFinalMaxiSleeperGuardOnThisMinute.minute
+  }`,
 );

@@ -89,23 +89,23 @@ class Amplifier {
             secondParameterIndex,
             thirdParameterIndex,
           ) =>
-            (array) => {
-              if (thirdParameterMode) {
-                array[thirdParameterIndex] = (firstParameterMode
-                  ? array[firstParameterIndex]
-                  : array[array[firstParameterIndex]]) +
-                  (secondParameterMode
-                    ? array[secondParameterIndex]
-                    : array[array[secondParameterIndex]]);
-              } else {
-                array[array[thirdParameterIndex]] = (firstParameterMode
-                  ? array[firstParameterIndex]
-                  : array[array[firstParameterIndex]]) +
-                  (secondParameterMode
-                    ? array[secondParameterIndex]
-                    : array[array[secondParameterIndex]]);
-              }
-            },
+          (array) => {
+            if (thirdParameterMode) {
+              array[thirdParameterIndex] = (firstParameterMode
+                ? array[firstParameterIndex]
+                : array[array[firstParameterIndex]]) +
+                (secondParameterMode
+                  ? array[secondParameterIndex]
+                  : array[array[secondParameterIndex]]);
+            } else {
+              array[array[thirdParameterIndex]] = (firstParameterMode
+                ? array[firstParameterIndex]
+                : array[array[firstParameterIndex]]) +
+                (secondParameterMode
+                  ? array[secondParameterIndex]
+                  : array[array[secondParameterIndex]]);
+            }
+          },
         };
       case "02":
         return {
@@ -116,53 +116,50 @@ class Amplifier {
             secondParameterIndex,
             thirdParameterIndex,
           ) =>
-            (array) => {
-              if (thirdParameterMode) {
-                array[thirdParameterIndex] = (firstParameterMode
-                  ? array[firstParameterIndex]
-                  : array[array[firstParameterIndex]]) *
-                  (secondParameterMode
-                    ? array[secondParameterIndex]
-                    : array[array[secondParameterIndex]]);
-              } else {
-                array[array[thirdParameterIndex]] = (firstParameterMode
-                  ? array[firstParameterIndex]
-                  : array[array[firstParameterIndex]]) *
-                  (secondParameterMode
-                    ? array[secondParameterIndex]
-                    : array[array[secondParameterIndex]]);
-              }
-            },
+          (array) => {
+            if (thirdParameterMode) {
+              array[thirdParameterIndex] = (firstParameterMode
+                ? array[firstParameterIndex]
+                : array[array[firstParameterIndex]]) *
+                (secondParameterMode
+                  ? array[secondParameterIndex]
+                  : array[array[secondParameterIndex]]);
+            } else {
+              array[array[thirdParameterIndex]] = (firstParameterMode
+                ? array[firstParameterIndex]
+                : array[array[firstParameterIndex]]) *
+                (secondParameterMode
+                  ? array[secondParameterIndex]
+                  : array[array[secondParameterIndex]]);
+            }
+          },
         };
       case "03":
         return {
           opCode,
           numberOfParameter: 1,
-          transformationFunction: (firstParameterIndex) =>
-            (array) => {
-              if (firstParameterMode) {
-                array[firstParameterIndex] =
-                  this.inputs[this.currentInputIndex];
-              } else {
-                array[array[firstParameterIndex]] = this.inputs[
-                  this.currentInputIndex
-                ];
-              }
-              this.currentInputIndex += 1;
-            },
+          transformationFunction: (firstParameterIndex) => (array) => {
+            if (firstParameterMode) {
+              array[firstParameterIndex] = this.inputs[this.currentInputIndex];
+            } else {
+              array[array[firstParameterIndex]] = this.inputs[
+                this.currentInputIndex
+              ];
+            }
+            this.currentInputIndex += 1;
+          },
         };
       case "04":
         return {
           opCode,
           numberOfParameter: 1,
-          transformationFunction: (firstParameterIndex) =>
-            (array) => {
-              if (firstParameterMode) {
-                this.output = array[firstParameterIndex];
-              } else {
-                this.output = array[array[firstParameterIndex]];
-              }
-            },
+          transformationFunction: (firstParameterIndex) => (array) => {
+            if (firstParameterMode) {
+              this.output = array[firstParameterIndex];
+            } else {
+              this.output = array[array[firstParameterIndex]];
+            }
+          },
         };
       case "05":
         return {
@@ -172,19 +169,19 @@ class Amplifier {
             firstParameterIndex,
             secondParameterIndex,
           ) =>
-            (array) => {
-              const firstValue = firstParameterMode
-                ? array[firstParameterIndex]
-                : array[array[firstParameterIndex]];
-              const secondValue = secondParameterMode
-                ? array[secondParameterIndex]
-                : array[array[secondParameterIndex]];
-              if (firstValue !== 0) {
-                return secondValue;
-              } else {
-                return undefined;
-              }
-            },
+          (array) => {
+            const firstValue = firstParameterMode
+              ? array[firstParameterIndex]
+              : array[array[firstParameterIndex]];
+            const secondValue = secondParameterMode
+              ? array[secondParameterIndex]
+              : array[array[secondParameterIndex]];
+            if (firstValue !== 0) {
+              return secondValue;
+            } else {
+              return undefined;
+            }
+          },
         };
       case "06":
         return {
@@ -194,19 +191,19 @@ class Amplifier {
             firstParameterIndex,
             secondParameterIndex,
           ) =>
-            (array) => {
-              const firstValue = firstParameterMode
-                ? array[firstParameterIndex]
-                : array[array[firstParameterIndex]];
-              const secondValue = secondParameterMode
-                ? array[secondParameterIndex]
-                : array[array[secondParameterIndex]];
-              if (firstValue === 0) {
-                return secondValue;
-              } else {
-                return undefined;
-              }
-            },
+          (array) => {
+            const firstValue = firstParameterMode
+              ? array[firstParameterIndex]
+              : array[array[firstParameterIndex]];
+            const secondValue = secondParameterMode
+              ? array[secondParameterIndex]
+              : array[array[secondParameterIndex]];
+            if (firstValue === 0) {
+              return secondValue;
+            } else {
+              return undefined;
+            }
+          },
         };
       case "07":
         return {
@@ -217,20 +214,20 @@ class Amplifier {
             secondParameterIndex,
             thirdParameterIndex,
           ) =>
-            (array) => {
-              const firstValue = firstParameterMode
-                ? array[firstParameterIndex]
-                : array[array[firstParameterIndex]];
-              const secondValue = secondParameterMode
-                ? array[secondParameterIndex]
-                : array[array[secondParameterIndex]];
-              let thirdValue = firstValue < secondValue ? 1 : 0;
-              if (thirdParameterMode) {
-                array[thirdParameterIndex] = thirdValue;
-              } else {
-                array[array[thirdParameterIndex]] = thirdValue;
-              }
-            },
+          (array) => {
+            const firstValue = firstParameterMode
+              ? array[firstParameterIndex]
+              : array[array[firstParameterIndex]];
+            const secondValue = secondParameterMode
+              ? array[secondParameterIndex]
+              : array[array[secondParameterIndex]];
+            let thirdValue = firstValue < secondValue ? 1 : 0;
+            if (thirdParameterMode) {
+              array[thirdParameterIndex] = thirdValue;
+            } else {
+              array[array[thirdParameterIndex]] = thirdValue;
+            }
+          },
         };
       case "08":
         return {
@@ -241,20 +238,20 @@ class Amplifier {
             secondParameterIndex,
             thirdParameterIndex,
           ) =>
-            (array) => {
-              const firstValue = firstParameterMode
-                ? array[firstParameterIndex]
-                : array[array[firstParameterIndex]];
-              const secondValue = secondParameterMode
-                ? array[secondParameterIndex]
-                : array[array[secondParameterIndex]];
-              let thirdValue = firstValue === secondValue ? 1 : 0;
-              if (thirdParameterMode) {
-                array[thirdParameterIndex] = thirdValue;
-              } else {
-                array[array[thirdParameterIndex]] = thirdValue;
-              }
-            },
+          (array) => {
+            const firstValue = firstParameterMode
+              ? array[firstParameterIndex]
+              : array[array[firstParameterIndex]];
+            const secondValue = secondParameterMode
+              ? array[secondParameterIndex]
+              : array[array[secondParameterIndex]];
+            let thirdValue = firstValue === secondValue ? 1 : 0;
+            if (thirdParameterMode) {
+              array[thirdParameterIndex] = thirdValue;
+            } else {
+              array[array[thirdParameterIndex]] = thirdValue;
+            }
+          },
         };
       case "99":
         return {

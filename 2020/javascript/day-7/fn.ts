@@ -8,19 +8,18 @@ interface IBag {
   }>;
 }
 
-const parseRawBag = (withNumber: boolean) =>
-  (raw: string) => {
-    const data = raw.trim().split(" ");
-    return withNumber
-      ? {
-        number: Number.parseInt(data[0], 10),
-        type: [data[1], data[2]].join("-"),
-      }
-      : {
-        number: 1,
-        type: [data[0], data[1]].join("-"),
-      };
-  };
+const parseRawBag = (withNumber: boolean) => (raw: string) => {
+  const data = raw.trim().split(" ");
+  return withNumber
+    ? {
+      number: Number.parseInt(data[0], 10),
+      type: [data[1], data[2]].join("-"),
+    }
+    : {
+      number: 1,
+      type: [data[0], data[1]].join("-"),
+    };
+};
 
 export const parser: (data: IAoCInput) => ReadonlyArray<IBag> = (
   data: IAoCInput,
@@ -40,29 +39,29 @@ const retrieveContainer: (
 ) => (type: string) => ReadonlyArray<IBag> = (
   rules: ReadonlyArray<IBag>,
 ) =>
-  (type: string) => {
-    const containers = rules.filter((rule) =>
-      rule.contains.some((x) => x.type === type)
-    );
-    if (containers.length === 0) {
-      return [];
-    }
-    const innerContainers = containers.map((c) =>
-      retrieveContainer(rules)(c.type)
-    );
-    return [
-      ...containers,
-      ...innerContainers.reduce(
-        (previousValue, currentValue) => [...previousValue, ...currentValue],
-        [],
-      ),
-    ];
-  };
+(type: string) => {
+  const containers = rules.filter((rule) =>
+    rule.contains.some((x) => x.type === type)
+  );
+  if (containers.length === 0) {
+    return [];
+  }
+  const innerContainers = containers.map((c) =>
+    retrieveContainer(rules)(c.type)
+  );
+  return [
+    ...containers,
+    ...innerContainers.reduce(
+      (previousValue, currentValue) => [...previousValue, ...currentValue],
+      [],
+    ),
+  ];
+};
 
 export const retrieveContained: (
   rules: ReadonlyArray<IBag>,
-) => (type: string) => number = (rules: ReadonlyArray<IBag>) =>
-  (type: string) => {
+) => (type: string) => number =
+  (rules: ReadonlyArray<IBag>) => (type: string) => {
     const typeRule = rules.find((rule) => rule.type === type) as IBag;
     const innerBags = typeRule.contains;
 

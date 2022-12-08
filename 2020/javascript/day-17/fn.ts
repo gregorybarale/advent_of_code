@@ -72,65 +72,64 @@ const findNeighbours: (
 ) => (cube: ICube) => {
   existing: ReadonlyArray<ICube>;
   created: ReadonlyArray<ICube>;
-} = (dimension: Dimension) =>
-  (cube: ICube) => {
-    const xPossibility = [
-      cube.coordinate.x - 1,
-      cube.coordinate.x,
-      cube.coordinate.x + 1,
-    ];
-    const yPossibility = [
-      cube.coordinate.y - 1,
-      cube.coordinate.y,
-      cube.coordinate.y + 1,
-    ];
-    const zPossibility = [
-      cube.coordinate.z - 1,
-      cube.coordinate.z,
-      cube.coordinate.z + 1,
-    ];
-    let coordinatePossibility: Array<ICoordinate> = [];
-    let neighbours: {
-      existing: ReadonlyArray<ICube>;
-      created: ReadonlyArray<ICube>;
-    } = {
-      existing: [],
-      created: [],
-    };
+} = (dimension: Dimension) => (cube: ICube) => {
+  const xPossibility = [
+    cube.coordinate.x - 1,
+    cube.coordinate.x,
+    cube.coordinate.x + 1,
+  ];
+  const yPossibility = [
+    cube.coordinate.y - 1,
+    cube.coordinate.y,
+    cube.coordinate.y + 1,
+  ];
+  const zPossibility = [
+    cube.coordinate.z - 1,
+    cube.coordinate.z,
+    cube.coordinate.z + 1,
+  ];
+  let coordinatePossibility: Array<ICoordinate> = [];
+  let neighbours: {
+    existing: ReadonlyArray<ICube>;
+    created: ReadonlyArray<ICube>;
+  } = {
+    existing: [],
+    created: [],
+  };
 
-    for (let i = 0; i < xPossibility.length; i++) {
-      for (let j = 0; j < yPossibility.length; j++) {
-        for (let k = 0; k < zPossibility.length; k++) {
-          coordinatePossibility.push({
-            x: xPossibility[i],
-            y: yPossibility[j],
-            z: zPossibility[k],
-          });
-        }
+  for (let i = 0; i < xPossibility.length; i++) {
+    for (let j = 0; j < yPossibility.length; j++) {
+      for (let k = 0; k < zPossibility.length; k++) {
+        coordinatePossibility.push({
+          x: xPossibility[i],
+          y: yPossibility[j],
+          z: zPossibility[k],
+        });
       }
     }
+  }
 
-    coordinatePossibility = coordinatePossibility.filter((coordinate) =>
-      coordinateToId(coordinate) === coordinateToId(cube.coordinate)
-    );
+  coordinatePossibility = coordinatePossibility.filter((coordinate) =>
+    coordinateToId(coordinate) === coordinateToId(cube.coordinate)
+  );
 
-    coordinatePossibility.forEach((coordinate) => {
-      const id = coordinateToId(coordinate);
-      if (dimension.has(id)) {
-        neighbours.existing = [
-          ...neighbours.existing,
-          dimension.get(id) as ICube,
-        ];
-      } else {
-        neighbours.created = [
-          ...neighbours.created,
-          createEmptyCube(coordinate),
-        ];
-      }
-    });
+  coordinatePossibility.forEach((coordinate) => {
+    const id = coordinateToId(coordinate);
+    if (dimension.has(id)) {
+      neighbours.existing = [
+        ...neighbours.existing,
+        dimension.get(id) as ICube,
+      ];
+    } else {
+      neighbours.created = [
+        ...neighbours.created,
+        createEmptyCube(coordinate),
+      ];
+    }
+  });
 
-    return neighbours;
-  };
+  return neighbours;
+};
 
 export const fn1 = (input: IAoCInput) => {
   let dimension = parser(input);

@@ -46,59 +46,52 @@ const getTransformFunctionForShip: (
 ) => {
   switch (instructionType) {
     case InstructionTypeEnum.NORTH:
-      return (value: number) =>
-        (ship: IShip) => ({
-          ...ship,
-          coordinate: {
-            ...ship.coordinate,
-            y: ship.coordinate.y + value,
-          },
-        });
+      return (value: number) => (ship: IShip) => ({
+        ...ship,
+        coordinate: {
+          ...ship.coordinate,
+          y: ship.coordinate.y + value,
+        },
+      });
     case InstructionTypeEnum.SOUTH:
-      return (value: number) =>
-        (ship: IShip) => ({
-          ...ship,
-          coordinate: {
-            ...ship.coordinate,
-            y: ship.coordinate.y - value,
-          },
-        });
+      return (value: number) => (ship: IShip) => ({
+        ...ship,
+        coordinate: {
+          ...ship.coordinate,
+          y: ship.coordinate.y - value,
+        },
+      });
     case InstructionTypeEnum.EAST:
-      return (value: number) =>
-        (ship: IShip) => ({
-          ...ship,
-          coordinate: {
-            ...ship.coordinate,
-            x: ship.coordinate.x + value,
-          },
-        });
+      return (value: number) => (ship: IShip) => ({
+        ...ship,
+        coordinate: {
+          ...ship.coordinate,
+          x: ship.coordinate.x + value,
+        },
+      });
     case InstructionTypeEnum.WEST:
-      return (value: number) =>
-        (ship: IShip) => ({
-          ...ship,
-          coordinate: {
-            ...ship.coordinate,
-            x: ship.coordinate.x - value,
-          },
-        });
+      return (value: number) => (ship: IShip) => ({
+        ...ship,
+        coordinate: {
+          ...ship.coordinate,
+          x: ship.coordinate.x - value,
+        },
+      });
     case InstructionTypeEnum.FORWARD:
-      return (value: number) =>
-        (ship: IShip) =>
-          getTransformFunctionForShip(getFacingAsDirection(ship.facing))(value)(
-            ship,
-          );
+      return (value: number) => (ship: IShip) =>
+        getTransformFunctionForShip(getFacingAsDirection(ship.facing))(value)(
+          ship,
+        );
     case InstructionTypeEnum.LEFT:
-      return (value: number) =>
-        (ship: IShip) => ({
-          ...ship,
-          facing: ship.facing - value,
-        });
+      return (value: number) => (ship: IShip) => ({
+        ...ship,
+        facing: ship.facing - value,
+      });
     case InstructionTypeEnum.RIGHT:
-      return (value: number) =>
-        (ship: IShip) => ({
-          ...ship,
-          facing: ship.facing + value,
-        });
+      return (value: number) => (ship: IShip) => ({
+        ...ship,
+        facing: ship.facing + value,
+      });
     default:
       return (value: number) => (ship: IShip) => ({ ...ship });
   }
@@ -109,31 +102,31 @@ const rotateAroundCenter: (
 ) => (rotation: number) => (coordinate: ICoordinate) => ICoordinate = (
   center: ICoordinate,
 ) =>
-  (rotation: number) =>
-    (coordinate: ICoordinate) => {
-      const realRotation = rotation % 360;
+(rotation: number) =>
+(coordinate: ICoordinate) => {
+  const realRotation = rotation % 360;
 
-      let result = { ...coordinate };
+  let result = { ...coordinate };
 
-      if (realRotation === 90 || realRotation === -270) {
-        result = {
-          x: coordinate.y,
-          y: coordinate.x * -1,
-        };
-      } else if (realRotation === -90 || realRotation === 270) {
-        result = {
-          x: coordinate.y * -1,
-          y: coordinate.x,
-        };
-      } else if (realRotation === 180 || realRotation === -180) {
-        result = {
-          x: coordinate.x * -1,
-          y: coordinate.y * -1,
-        };
-      }
-
-      return result;
+  if (realRotation === 90 || realRotation === -270) {
+    result = {
+      x: coordinate.y,
+      y: coordinate.x * -1,
     };
+  } else if (realRotation === -90 || realRotation === 270) {
+    result = {
+      x: coordinate.y * -1,
+      y: coordinate.x,
+    };
+  } else if (realRotation === 180 || realRotation === -180) {
+    result = {
+      x: coordinate.x * -1,
+      y: coordinate.y * -1,
+    };
+  }
+
+  return result;
+};
 
 const getTransformFunctionForCoordinate: (
   instructionType: InstructionTypeEnum,
@@ -148,46 +141,40 @@ const getTransformFunctionForCoordinate: (
 ) => {
   switch (instructionType) {
     case InstructionTypeEnum.NORTH:
-      return (value: number) =>
-        (coordinateToChanged: ICoordinate) => ({
-          ...coordinateToChanged,
-          y: coordinateToChanged.y + value,
-        });
+      return (value: number) => (coordinateToChanged: ICoordinate) => ({
+        ...coordinateToChanged,
+        y: coordinateToChanged.y + value,
+      });
     case InstructionTypeEnum.SOUTH:
-      return (value: number) =>
-        (coordinateToChanged: ICoordinate) => ({
-          ...coordinateToChanged,
-          y: coordinateToChanged.y - value,
-        });
+      return (value: number) => (coordinateToChanged: ICoordinate) => ({
+        ...coordinateToChanged,
+        y: coordinateToChanged.y - value,
+      });
     case InstructionTypeEnum.EAST:
-      return (value: number) =>
-        (coordinateToChanged: ICoordinate) => ({
-          ...coordinateToChanged,
-          x: coordinateToChanged.x + value,
-        });
+      return (value: number) => (coordinateToChanged: ICoordinate) => ({
+        ...coordinateToChanged,
+        x: coordinateToChanged.x + value,
+      });
     case InstructionTypeEnum.WEST:
-      return (value: number) =>
-        (coordinateToChanged: ICoordinate) => ({
-          ...coordinateToChanged,
-          x: coordinateToChanged.x - value,
-        });
+      return (value: number) => (coordinateToChanged: ICoordinate) => ({
+        ...coordinateToChanged,
+        x: coordinateToChanged.x - value,
+      });
     case InstructionTypeEnum.FORWARD:
-      return (value: number) =>
-        (coordinateToChanged: ICoordinate) => ({
-          x: coordinateToChanged.x + value * configCoodinate.x,
-          y: coordinateToChanged.y + value * configCoodinate.y,
-        });
+      return (value: number) => (coordinateToChanged: ICoordinate) => ({
+        x: coordinateToChanged.x + value * configCoodinate.x,
+        y: coordinateToChanged.y + value * configCoodinate.y,
+      });
     case InstructionTypeEnum.LEFT:
-      return (value: number) =>
-        (coordinateToChanged: ICoordinate) =>
-          rotateAroundCenter(configCoodinate)(value * -1)(coordinateToChanged);
+      return (value: number) => (coordinateToChanged: ICoordinate) =>
+        rotateAroundCenter(configCoodinate)(value * -1)(coordinateToChanged);
     case InstructionTypeEnum.RIGHT:
-      return (value: number) =>
-        (coordinateToChanged: ICoordinate) =>
-          rotateAroundCenter(configCoodinate)(value)(coordinateToChanged);
+      return (value: number) => (coordinateToChanged: ICoordinate) =>
+        rotateAroundCenter(configCoodinate)(value)(coordinateToChanged);
     default:
-      return (value: number) =>
-        (coordinateToChanged: ICoordinate) => ({ ...coordinateToChanged });
+      return (value: number) => (coordinateToChanged: ICoordinate) => ({
+        ...coordinateToChanged,
+      });
   }
 };
 

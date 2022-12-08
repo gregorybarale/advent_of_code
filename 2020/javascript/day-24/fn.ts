@@ -235,19 +235,19 @@ const filterWhiteTilesWithAdjacents: (
 ) => (whiteTilesId: ReadonlyArray<string>) => ReadonlyArray<string> = (
   blackTilesId: ReadonlyArray<string>,
 ) =>
-  (whiteTilesId: ReadonlyArray<string>) =>
-    whiteTilesId.reduce((previousValue, currentValue) => {
-      const adjacentIds = getAdjacentTiles(
-        convertTileIdToCoordinate(currentValue),
-      ).map((coord) => convertCoordinateToTileId(coord));
-      const adjacentBlackIds = adjacentIds.filter((id) =>
-        blackTilesId.includes(id)
-      );
-      if (adjacentBlackIds.length === 2) {
-        return [...previousValue, currentValue];
-      }
-      return previousValue;
-    }, [] as ReadonlyArray<string>);
+(whiteTilesId: ReadonlyArray<string>) =>
+  whiteTilesId.reduce((previousValue, currentValue) => {
+    const adjacentIds = getAdjacentTiles(
+      convertTileIdToCoordinate(currentValue),
+    ).map((coord) => convertCoordinateToTileId(coord));
+    const adjacentBlackIds = adjacentIds.filter((id) =>
+      blackTilesId.includes(id)
+    );
+    if (adjacentBlackIds.length === 2) {
+      return [...previousValue, currentValue];
+    }
+    return previousValue;
+  }, [] as ReadonlyArray<string>);
 
 export const fn1 = (input: IAoCInput) => {
   const instructionsList = parser(input);

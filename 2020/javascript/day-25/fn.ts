@@ -5,43 +5,43 @@ const performLoopSize: (
 ) => (subjectNumber: number) => (value: number) => number = (
   dividerConfig: number,
 ) =>
-  (subjectNumber: number) =>
-    (value: number) => value * subjectNumber % dividerConfig;
+(subjectNumber: number) =>
+(value: number) => value * subjectNumber % dividerConfig;
 
 const findLoopSize: (
   dividerConfig: number,
 ) => (subjectNumber: number) => (publicKey: number) => number = (
   dividerConfig: number,
 ) =>
-  (subjectNumber: number) =>
-    (publicKey: number) => {
-      console.log("Starting finding loop size");
-      let loopSize = 0;
-      let calculatedPublicKey: number = 1;
-      do {
-        console.log(`Trying loop size for: ${loopSize}`);
-        loopSize += 1;
-        calculatedPublicKey = performLoopSize(dividerConfig)(subjectNumber)(
-          calculatedPublicKey,
-        );
-      } while (calculatedPublicKey !== publicKey);
-      console.log(`Loop size found: ${loopSize}`);
-      return loopSize;
-    };
+(subjectNumber: number) =>
+(publicKey: number) => {
+  console.log("Starting finding loop size");
+  let loopSize = 0;
+  let calculatedPublicKey: number = 1;
+  do {
+    console.log(`Trying loop size for: ${loopSize}`);
+    loopSize += 1;
+    calculatedPublicKey = performLoopSize(dividerConfig)(subjectNumber)(
+      calculatedPublicKey,
+    );
+  } while (calculatedPublicKey !== publicKey);
+  console.log(`Loop size found: ${loopSize}`);
+  return loopSize;
+};
 
 const applyLoopSize: (
   dividerConfig: number,
 ) => (loopSize: number) => (subjectNumber: number) => number = (
   dividerConfig: number,
 ) =>
-  (loopSize: number) =>
-    (subjectNumber: number) => {
-      let value = 1;
-      for (let i = 1; i <= loopSize; i++) {
-        value = performLoopSize(dividerConfig)(subjectNumber)(value);
-      }
-      return value;
-    };
+(loopSize: number) =>
+(subjectNumber: number) => {
+  let value = 1;
+  for (let i = 1; i <= loopSize; i++) {
+    value = performLoopSize(dividerConfig)(subjectNumber)(value);
+  }
+  return value;
+};
 
 export const fn1 = ({ input }: IAoCInput) => {
   const DIVIDER_CONFIG = 20201227;

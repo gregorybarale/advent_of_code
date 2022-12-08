@@ -12,10 +12,10 @@ const processPoint = (input) => {
 
 const getMinMaxGlobalArea = (pointArr) => {
   return [
-    (minX = Math.min(...pointArr.map((coord) => coord.x))),
-    (maxX = Math.max(...pointArr.map((coord) => coord.x))),
-    (minY = Math.min(...pointArr.map((coord) => coord.y))),
-    (maxY = Math.max(...pointArr.map((coord) => coord.y))),
+    minX = Math.min(...pointArr.map((coord) => coord.x)),
+    maxX = Math.max(...pointArr.map((coord) => coord.x)),
+    minY = Math.min(...pointArr.map((coord) => coord.y)),
+    maxY = Math.max(...pointArr.map((coord) => coord.y)),
   ];
 };
 

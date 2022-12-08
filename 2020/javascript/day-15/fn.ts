@@ -47,36 +47,35 @@ export const fn2 = (input: IAoCInput) => {
   return stack[0];
 };
 
-export const fn = (lastTurn: number) =>
-  ({ input }: IAoCInput) => {
-    const parsedInput = input[0].split(",").map((n) => Number.parseInt(n, 10));
-    const map = parsedInput.reduce(
-      (previousValue, currentValue, currentIndex) => {
-        previousValue.set(currentValue, currentIndex + 1);
-        return previousValue;
-      },
-      new Map<number, number>(),
-    );
+export const fn = (lastTurn: number) => ({ input }: IAoCInput) => {
+  const parsedInput = input[0].split(",").map((n) => Number.parseInt(n, 10));
+  const map = parsedInput.reduce(
+    (previousValue, currentValue, currentIndex) => {
+      previousValue.set(currentValue, currentIndex + 1);
+      return previousValue;
+    },
+    new Map<number, number>(),
+  );
 
-    let currentTurn = parsedInput.length + 1;
-    let lastNumberSpoken = parsedInput[parsedInput.length - 1];
-    let isFirstTime =
-      parsedInput.filter((n) => n === lastNumberSpoken).length < 2;
+  let currentTurn = parsedInput.length + 1;
+  let lastNumberSpoken = parsedInput[parsedInput.length - 1];
+  let isFirstTime =
+    parsedInput.filter((n) => n === lastNumberSpoken).length < 2;
 
-    while (currentTurn <= lastTurn) {
-      const temp = isFirstTime ? 0 : currentTurn - map;
+  while (currentTurn <= lastTurn) {
+    const temp = isFirstTime ? 0 : currentTurn - map;
 
-      if (currentTurn % 100000 === 0) {
-        console.log(currentTurn);
-      }
-
+    if (currentTurn % 100000 === 0) {
       console.log(currentTurn);
-      console.log(lastNumberSpoken);
-      console.log(map);
-      console.log("-------");
-
-      currentTurn += 1;
     }
 
-    return lastNumberSpoken;
-  };
+    console.log(currentTurn);
+    console.log(lastNumberSpoken);
+    console.log(map);
+    console.log("-------");
+
+    currentTurn += 1;
+  }
+
+  return lastNumberSpoken;
+};

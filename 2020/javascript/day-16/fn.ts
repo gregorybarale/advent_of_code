@@ -80,21 +80,21 @@ const getNumbersAtIndex: (
 ) => (tickets: ReadonlyArray<ITicket>) => ReadonlyArray<number> = (
   index: number,
 ) =>
-  (tickets: ReadonlyArray<ITicket>) => tickets.map((ticket) => ticket[index]);
+(tickets: ReadonlyArray<ITicket>) => tickets.map((ticket) => ticket[index]);
 
 const checkRuleValidityAtIndex: (
   index: number,
 ) => (rule: IFieldRule) => (tickets: ReadonlyArray<ITicket>) => boolean = (
   index: number,
 ) =>
-  (rule: IFieldRule) =>
-    (tickets: ReadonlyArray<ITicket>) => {
-      const numbers = getNumbersAtIndex(index)(tickets);
-      return numbers.every((n) =>
-        n >= rule.intervals[0][0] && n <= rule.intervals[0][1] ||
-        n >= rule.intervals[1][0] && n <= rule.intervals[1][1]
-      );
-    };
+(rule: IFieldRule) =>
+(tickets: ReadonlyArray<ITicket>) => {
+  const numbers = getNumbersAtIndex(index)(tickets);
+  return numbers.every((n) =>
+    n >= rule.intervals[0][0] && n <= rule.intervals[0][1] ||
+    n >= rule.intervals[1][0] && n <= rule.intervals[1][1]
+  );
+};
 
 export const fn1 = (input: IAoCInput) => {
   const data = parser(input);
