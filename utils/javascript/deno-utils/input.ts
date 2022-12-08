@@ -1,5 +1,3 @@
-import { ServerRequest } from "https://deno.land/std/http/server.ts";
-
 export interface IAoCInput {
   year: number;
   day: number;
@@ -15,9 +13,8 @@ export const getInput: (
   day: number,
   token: string,
 ) => {
-  const request = new ServerRequest();
-  request.headers = new Headers();
-  request.headers.set(
+  const headers = new Headers();
+  headers.set(
     "Cookie",
     `session=${token}`,
   );
@@ -25,7 +22,7 @@ export const getInput: (
   const page = await fetch(
     `https://adventofcode.com/${year}/day/${day}/input`,
     {
-      headers: request.headers,
+      headers,
     },
   );
   const input = (await page.text()).split("\n");

@@ -1,5 +1,5 @@
 import { getInput, IAoCInput } from "../utils/javascript/deno-utils/input.ts";
-import { ensureDir } from "https://deno.land/std/fs/mod.ts";
+import { ensureDir } from "https://deno.land/std@0.167.0/fs/ensure_dir.ts";
 
 const [yearStr, dayStr, token] = Deno.args;
 const year = Number.parseInt(yearStr, 10);
