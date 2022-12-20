@@ -23,4 +23,4 @@ const testData: IAoCInput = {
 };
 
 console.log(fn1(testData, 10));
-console.log(fn2(testData));
+console.log(fn2(testData, 0, 20));

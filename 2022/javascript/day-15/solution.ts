@@ -5,5 +5,5 @@ console.log(
   `Solution for part 1 is ${fn1(input, 2000000)} `,
 );
 console.log(
-  `Solution for part 2 is ${fn2(input)}`,
+  `Solution for part 2 is ${fn2(input, 0, 4000000)}`,
 );

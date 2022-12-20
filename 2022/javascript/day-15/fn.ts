@@ -51,38 +51,117 @@ const filterSensorSensingLine =
       return Math.abs(sensor.y - line) <= sensor.manhattanDistanceToClosest;
     });
 
-const coordSensedBySensorInLine =
-  (sensor: ISensor) => (line: number): Set<string> => {
-    const coord = new Set<string>();
-    const xMin = sensor.x -
+const coordSensedBySensorInLine = (
+  coords: Set<string>,
+  sensor: ISensor,
+  config?: { min: number; max: number },
+) =>
+(line: number) => {
+  let xMin: number;
+  let xMax: number;
+  if (config) {
+    xMin = Math.max(
+      config.min,
+      sensor.x -
+        Math.abs(
+          sensor.manhattanDistanceToClosest - Math.abs(line - sensor.y),
+        ),
+    );
+    xMax = Math.min(
+      config.max,
+      sensor.x +
+        Math.abs(
+          sensor.manhattanDistanceToClosest - Math.abs(line - sensor.y),
+        ),
+    );
+  } else {
+    xMin = sensor.x -
       Math.abs(sensor.manhattanDistanceToClosest - Math.abs(line - sensor.y));
-    const xMax = sensor.x +
+    xMax = sensor.x +
       Math.abs(sensor.manhattanDistanceToClosest - Math.abs(line - sensor.y));
-    for (let x = xMin; x <= xMax; x++) {
-      coord.add(coordToString({ x, y: line }));
-    }
-    return coord;
-  };
+  }
+  for (let x = xMin; x <= xMax; x++) {
+    coords.add(coordToString({ x, y: line }));
+  }
+};
+
+const doesSensorSeeingCoord = (coord: ICoord) => (sensor: ISensor): boolean => {
+  return getManhattanDistance(sensor, coord) <=
+    sensor.manhattanDistanceToClosest;
+};
 
 export const fn1 = ({ input }: IAoCInput, line: number) => {
   const sensors = parseInput(input);
   const sensorsSensingLine = filterSensorSensingLine(line)(sensors);
+  const coords = new Set<string>();
   const coordsSensedBySensorsInLineFns = sensorsSensingLine.map(
-    coordSensedBySensorInLine,
+    (sensor) => coordSensedBySensorInLine(coords, sensor),
   );
-  const coordsSensedBySensorsInLine = coordsSensedBySensorsInLineFns.reduce(
-    (acc, curr) => {
-      const coords = curr(line);
-      return new Set([...acc, ...coords]);
-    },
-    new Set<string>(),
-  );
+  coordsSensedBySensorsInLineFns.forEach((fn) => fn(line));
   const beacons = new Set(
     sensors.map((sensor) => coordToString(sensor.closestBeacon)),
   );
-  beacons.forEach((beacon) => coordsSensedBySensorsInLine.delete(beacon));
-  return coordsSensedBySensorsInLine.size;
+  beacons.forEach((beacon) => coords.delete(beacon));
+  return coords.size;
 };
-export const fn2 = (input: IAoCInput) => {
-  return undefined;
+
+export const fn2old = ({ input }: IAoCInput, min: number, max: number) => {
+  const lineLenght = max - min + 1;
+  const sensors = parseInput(input);
+  let coordsSensedInOnlyPossibleLine: Set<string> | undefined = undefined;
+  const sensorsByLineMap = Array.from({ length: max - min + 1 }, (_, i) => i)
+    .reduce((acc, curr) => {
+      const sensorsSensingLine = filterSensorSensingLine(curr)(sensors);
+      acc.set(curr, new Set(sensorsSensingLine));
+      return acc;
+    }, new Map<number, Set<ISensor>>());
+  for (let y = min; y <= max; y++) {
+    const coords = new Set<string>();
+    console.log("Handling line", y);
+    const coordsSensedBySensorsInLineFns = [...sensorsByLineMap.get(y)!].map(
+      (sensor) => coordSensedBySensorInLine(coords, sensor, { min, max }),
+    );
+    coordsSensedBySensorsInLineFns.forEach((fn) => fn(y));
+    if (coords.size !== lineLenght) {
+      coordsSensedInOnlyPossibleLine = coords;
+      break;
+    }
+  }
+  const coords = [...coordsSensedInOnlyPossibleLine!].map(stringToCoord);
+  for (let i = min; i <= max; i++) {
+    if (!coords.some((c) => c.x === i)) {
+      return i * 4000000 + coords[0].y;
+    }
+  }
+};
+
+export const fn2 = ({ input }: IAoCInput, min: number, max: number) => {
+  const sensors = parseInput(input);
+  const sensorsSeeingLineMap = Array.from(
+    { length: max - min + 1 },
+    (_, i) => i,
+  )
+    .reduce((acc, curr) => {
+      const sensorsSensingLine = filterSensorSensingLine(curr)(sensors);
+      acc.set(curr, new Set(sensorsSensingLine));
+      return acc;
+    }, new Map<number, Set<ISensor>>());
+  for (let y = min; y <= max; y++) {
+    const sensorsSeeingLine = sensorsSeeingLineMap.get(y)!;
+    for (let x = min; x <= max; x++) {
+      console.log("Handling", x, y);
+      const coord: ICoord = { x, y };
+      const predicate = doesSensorSeeingCoord(coord);
+      let sensed = false;
+      for (const sensor of sensorsSeeingLine) {
+        if (predicate(sensor)) {
+          sensed = true;
+          break;
+        }
+      }
+      if (!sensed) {
+        return x * 4000000 + y;
+      }
+    }
+  }
 };
